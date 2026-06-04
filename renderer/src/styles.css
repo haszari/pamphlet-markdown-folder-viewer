@@ -28,6 +28,11 @@ a {
   color: var(--pamphlet-accent, LinkText);
 }
 
+.view ::selection {
+  background: var(--pamphlet-selection-background, Highlight);
+  color: var(--pamphlet-foreground, HighlightText);
+}
+
 .view {
   box-sizing: border-box;
   max-width: 920px;
