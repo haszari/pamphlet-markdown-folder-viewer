@@ -1,11 +1,12 @@
 :root {
   color-scheme: light dark;
-  font-family:
-    var(--pamphlet-font-family),
+  font-family: var(
+    --pamphlet-font-family,
     -apple-system,
     BlinkMacSystemFont,
     "SF Pro Text",
-    sans-serif;
+    sans-serif
+  );
   font-size: 16px;
   line-height: 1.55;
   color: var(--pamphlet-foreground, CanvasText);
@@ -56,8 +57,13 @@ a {
 
 pre,
 code {
-  font-family:
-    var(--pamphlet-monospace-font-family), "SF Mono", Menlo, Consolas, monospace;
+  font-family: var(
+    --pamphlet-monospace-font-family,
+    "SF Mono",
+    Menlo,
+    Consolas,
+    monospace
+  );
 }
 
 .source pre {

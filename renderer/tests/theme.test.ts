@@ -1,5 +1,11 @@
+import { readFileSync } from "node:fs";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
 import { beforeEach, describe, expect, it } from "vitest";
 import { render, type RenderPayload } from "../src/render";
+
+const testDir = path.dirname(fileURLToPath(import.meta.url));
+const rendererRoot = path.resolve(testDir, "..");
 
 const basePayload: RenderPayload = {
   mode: "markdown",
@@ -87,5 +93,19 @@ describe("theme rendering", () => {
     expect(
       document.getElementById("pamphlet-workspace-theme-css")?.textContent,
     ).toBe("");
+  });
+
+  it("keeps default font stacks when theme font variables are unset", () => {
+    const styles = readFileSync(
+      path.join(rendererRoot, "src/styles.css"),
+      "utf8",
+    );
+
+    expect(styles).toContain("--pamphlet-font-family,\n    -apple-system");
+    expect(styles).toContain(
+      '--pamphlet-monospace-font-family,\n    "SF Mono"',
+    );
+    expect(styles).not.toContain("var(--pamphlet-font-family),");
+    expect(styles).not.toContain("var(--pamphlet-monospace-font-family),");
   });
 });
