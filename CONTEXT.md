@@ -117,24 +117,44 @@ Styling applied only to rendered content inside the view surface. It does not st
 _Avoid_: App theme, window theme, chrome theme
 
 **App theme**:
-A workspace window's visual identity across app chrome and rendered content. App chrome theming is limited to window surfaces, sidebar, tabs, selection, borders, watermark badge, and title context, while content style owns richer document presentation such as typography.
+A workspace window's visual identity across workspace window UI and rendered content. Workspace window UI theming is limited to window surfaces, sidebar, tabs, selection, borders, watermark badge, and title context, while content style owns richer document presentation such as typography. Utility windows such as Preferences are not themed.
 _Avoid_: Content style, CSS skin
 
 **Theme variable**:
-A sanctioned `--pamphlet-*` CSS custom property that the app understands as theme configuration. Theme variables are the stable contract for app chrome and default content styling, while ordinary CSS selectors remain an advanced content customisation mechanism.
+A sanctioned `--pamphlet-*` CSS custom property that the app understands as theme configuration. Theme variables are the stable contract for workspace window UI and default content styling, while ordinary CSS selectors remain an advanced content customisation mechanism.
 _Avoid_: Arbitrary CSS option, hidden setting
 
 **Flat theme token**:
 A theme variable whose value is directly parseable by the app shell without resolving another CSS variable or expression. Theme variables are flat tokens; advanced CSS may use richer CSS features outside the sanctioned theme variable surface.
 _Avoid_: Derived token, variable alias
 
+**Opinionated theme surface**:
+The principle that sanctioned theme variables use one clear spelling for each concept unless additional flexibility is necessary. Advanced variation belongs in ordinary content CSS, not in multiple equivalent app-facing token formats.
+_Avoid_: Permissive theme API, many spellings
+
 **Theme extraction**:
-The app shell's limited reading of sanctioned theme variables from theme CSS. It extracts app-facing values for native chrome and window behaviour, while the renderer remains responsible for interpreting full CSS.
+The app shell's limited reading of sanctioned theme variables from theme CSS. It extracts app-facing values for workspace window UI and window behaviour, while the renderer remains responsible for interpreting full CSS.
 _Avoid_: CSS engine, stylesheet evaluation
 
 **Adaptive theme**:
 A single app theme file that uses standard CSS colour-scheme features, especially `@media (prefers-color-scheme: dark)`, to respond to macOS light and dark appearance.
 _Avoid_: Light/dark theme pair, generated theme variant
+
+**Workspace theme overlay**:
+A workspace's `.pamphlet.css` file layered after the selected app theme. It is not a child theme and does not name a parent; later CSS wins.
+_Avoid_: Theme inheritance, theme extension, parent theme
+
+**Workspace title**:
+The workspace label shown inside the app-owned window title format. It can be customised by workspace theme CSS, but the window title shape remains owned by Pamphlet.
+_Avoid_: Window title template, title format
+
+**Theme CSS**:
+The shared self-contained file format for built-in app themes, user app themes, and workspace theme overlays. All theme CSS follows the same rules: sanctioned flat theme variables configure app-recognised values, and ordinary CSS selectors customise rendered content.
+_Avoid_: App theme format, workspace theme format
+
+**Theme reference CSS**:
+The generated, copyable CSS reference that documents Pamphlet's sanctioned theme variables and renderer styling hooks. It is documentation, not the source of a built-in app theme.
+_Avoid_: Built-in theme, generated app theme
 
 **Transparent rendering**:
 Rendering that preserves the source content's apparent meaning and avoids clever transformations. Usability adjustments, such as fitting oversized images to the pane, should be simple and preferably user-configurable.
@@ -145,7 +165,7 @@ The built-in content style used by every view surface in the first build. It sho
 _Avoid_: Theme picker, custom CSS override
 
 **Preferences window**:
-A dedicated settings UI for changing app behaviour. The first build does not include a preferences window.
+A dedicated settings UI for changing app behaviour such as the default app theme.
 _Avoid_: Settings surface, options panel
 
 **In-workspace viewable link**:
