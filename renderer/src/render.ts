@@ -11,6 +11,7 @@ import {
   rewriteEmbeddedAssetUrl,
   type UrlPolicy,
 } from "./urlPolicy";
+import { applyRenderTheme, type RenderThemePayload } from "./theme";
 
 export type RenderMode = "markdown" | "text" | "code" | "table" | "image";
 
@@ -27,6 +28,7 @@ export type RenderPayload = {
     delimiter: "," | "\t";
     firstRowHeader: boolean;
   };
+  theme?: RenderThemePayload;
 };
 
 const markdown = new MarkdownIt({
@@ -46,6 +48,8 @@ const markdown = new MarkdownIt({
 export function render(payload: RenderPayload): void {
   const root = document.getElementById("root");
   if (!root) return;
+
+  applyRenderTheme(payload.theme);
 
   const policy: UrlPolicy = {
     workspaceToken: payload.workspaceToken,

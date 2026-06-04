@@ -1,17 +1,22 @@
 :root {
   color-scheme: light dark;
-  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+  font-family:
+    var(--pamphlet-font-family),
+    -apple-system,
+    BlinkMacSystemFont,
+    "SF Pro Text",
+    sans-serif;
   font-size: 16px;
   line-height: 1.55;
-  color: CanvasText;
-  background: Canvas;
+  color: var(--pamphlet-foreground, CanvasText);
+  background: var(--pamphlet-background, Canvas);
 }
 
 html,
 body {
   margin: 0;
   min-height: 100%;
-  background: Canvas;
+  background: var(--pamphlet-background, Canvas);
 }
 
 body {
@@ -19,7 +24,7 @@ body {
 }
 
 a {
-  color: LinkText;
+  color: var(--pamphlet-accent, LinkText);
 }
 
 .view {
@@ -51,7 +56,9 @@ a {
 
 pre,
 code {
-  font-family: "SF Mono", Menlo, Consolas, monospace;
+  font-family:
+    var(--pamphlet-monospace-font-family), "SF Mono", Menlo, Consolas,
+    monospace;
 }
 
 .source pre {
@@ -67,8 +74,15 @@ code {
 .markdown h1,
 .markdown h2,
 .markdown h3 {
+  font-family: var(--pamphlet-heading-font-family, inherit);
   line-height: 1.2;
   margin: 1.6em 0 0.55em;
+}
+
+.markdown h4,
+.markdown h5,
+.markdown h6 {
+  font-family: var(--pamphlet-heading-font-family, inherit);
 }
 
 .markdown h1:first-child,
@@ -87,8 +101,12 @@ code {
 }
 
 .markdown blockquote {
-  border-left: 3px solid color-mix(in srgb, CanvasText 24%, transparent);
-  color: color-mix(in srgb, CanvasText 78%, Canvas);
+  background: var(--pamphlet-quote-background, transparent);
+  border-left: 3px solid var(--pamphlet-border, color-mix(in srgb, CanvasText 24%, transparent));
+  color: var(
+    --pamphlet-muted-foreground,
+    color-mix(in srgb, CanvasText 78%, Canvas)
+  );
   padding-left: 1em;
 }
 
@@ -101,12 +119,18 @@ code {
   overflow: auto;
   padding: 14px 16px;
   border-radius: 6px;
-  background: color-mix(in srgb, CanvasText 8%, Canvas);
+  background: var(
+    --pamphlet-code-background,
+    color-mix(in srgb, CanvasText 8%, Canvas)
+  );
 }
 
 .markdown code {
   border-radius: 4px;
-  background: color-mix(in srgb, CanvasText 8%, Canvas);
+  background: var(
+    --pamphlet-code-background,
+    color-mix(in srgb, CanvasText 8%, Canvas)
+  );
   padding: 0.12em 0.28em;
 }
 
@@ -127,14 +151,19 @@ table {
 
 th,
 td {
-  border: 1px solid color-mix(in srgb, CanvasText 18%, Canvas);
+  border: 1px solid
+    var(--pamphlet-border, color-mix(in srgb, CanvasText 18%, Canvas));
   padding: 6px 9px;
   text-align: left;
   vertical-align: top;
 }
 
 th {
-  background: color-mix(in srgb, CanvasText 7%, Canvas);
+  background: color-mix(
+    in srgb,
+    var(--pamphlet-foreground, CanvasText) 7%,
+    var(--pamphlet-background, Canvas)
+  );
   font-weight: 600;
 }
 
@@ -158,7 +187,8 @@ th {
 }
 
 .footnotes {
-  border-top: 1px solid color-mix(in srgb, CanvasText 18%, Canvas);
+  border-top: 1px solid
+    var(--pamphlet-border, color-mix(in srgb, CanvasText 18%, Canvas));
   margin-top: 2em;
   padding-top: 1em;
 }
