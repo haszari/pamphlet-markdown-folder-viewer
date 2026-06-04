@@ -124,6 +124,15 @@ struct ResolvedTheme: Equatable {
     let rawWorkspaceCSS: String
     let badge: ThemeBadge?
     let workspaceTitle: String?
+
+    var rendererPayload: RendererPayload.ThemePayload {
+        RendererPayload.ThemePayload(
+            variables: variables,
+            appCSS: rawAppCSS,
+            workspaceCSS: rawWorkspaceCSS,
+            appearance: appearance.rawValue
+        )
+    }
 }
 
 struct ThemeColors: Equatable {
@@ -147,4 +156,3 @@ struct AppTheme: Identifiable, Equatable {
 
     var id: String { reference.rawValue }
 }
-

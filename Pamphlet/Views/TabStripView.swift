@@ -24,11 +24,12 @@ struct TabStripView: View {
                                     .font(.system(size: 10, weight: .medium))
                             }
                             .buttonStyle(.plain)
-                            .foregroundStyle(.secondary)
+                            .foregroundStyle(Color(nsColor: model.theme.colors.mutedForeground.nsColor))
                         }
                         .padding(.horizontal, 10)
                         .frame(height: 30)
-                        .background(model.activeTabID == tab.id ? Color(nsColor: .textBackgroundColor) : Color.clear)
+                        .foregroundStyle(Color(nsColor: model.theme.colors.foreground.nsColor))
+                        .background(model.activeTabID == tab.id ? Color(nsColor: model.theme.colors.background.nsColor) : Color.clear)
                     }
                     .buttonStyle(.plain)
                     .contextMenu {
@@ -45,6 +46,6 @@ struct TabStripView: View {
                 }
             }
         }
-        .background(Color(nsColor: .windowBackgroundColor))
+        .background(Color(nsColor: model.theme.colors.windowBackground.nsColor))
     }
 }

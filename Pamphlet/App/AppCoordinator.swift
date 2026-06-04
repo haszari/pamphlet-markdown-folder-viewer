@@ -5,6 +5,7 @@ final class AppCoordinator {
     static let shared = AppCoordinator()
 
     private var controllers: [WorkspaceWindowController] = []
+    private var preferencesWindowController: PreferencesWindowController?
 
     var activeWindowController: WorkspaceWindowController? {
         NSApp.keyWindow?.windowController as? WorkspaceWindowController
@@ -69,6 +70,21 @@ final class AppCoordinator {
 
     func release(_ controller: WorkspaceWindowController) {
         controllers.removeAll { $0 === controller }
+    }
+
+    func showPreferences() {
+        let controller = preferencesWindowController ?? PreferencesWindowController()
+        preferencesWindowController = controller
+        controller.showWindow(nil)
+        controller.window?.makeKeyAndOrderFront(nil)
+        NSApp.activate(ignoringOtherApps: true)
+    }
+
+    func refreshThemesForOpenWorkspaces() {
+        ThemeStore.shared.reloadAppThemes()
+        for controller in controllers {
+            controller.model.reloadTheme()
+        }
     }
 
     private func retainAndShow(_ controller: WorkspaceWindowController) {

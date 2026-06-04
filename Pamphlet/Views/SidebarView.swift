@@ -12,8 +12,20 @@ struct SidebarView: View {
                 }
             }
             .padding(.vertical, 8)
+            .padding(.bottom, bottomBadgeHeadroom)
         }
-        .background(Color(nsColor: .controlBackgroundColor))
+        .background(Color(nsColor: model.theme.colors.windowBackground.nsColor))
+    }
+
+    private var bottomBadgeHeadroom: CGFloat {
+        guard
+            let badge = model.theme.badge,
+            badge.anchor == .window,
+            badge.placement == .bottomLeft || badge.placement == .bottomRight
+        else {
+            return 0
+        }
+        return CGFloat(badge.size.points + badge.marginY.points * 2)
     }
 }
 
@@ -43,13 +55,13 @@ private struct FileNodeRow: View {
                 }
 
                 Image(systemName: node.systemImageName)
-                    .foregroundStyle(iconStyle)
+                    .foregroundStyle(iconColor)
                     .frame(width: 16)
 
                 Text(node.name)
                     .lineLimit(1)
                     .truncationMode(.middle)
-                    .foregroundStyle(textStyle)
+                    .foregroundStyle(textColor)
 
                 Spacer(minLength: 0)
             }
@@ -92,22 +104,22 @@ private struct FileNodeRow: View {
 
     private var rowBackground: some View {
         RoundedRectangle(cornerRadius: 5)
-            .fill(isSelected ? Color(nsColor: .separatorColor).opacity(0.35) : Color.clear)
+            .fill(isSelected ? Color(nsColor: model.theme.colors.selectionBackground.nsColor) : Color.clear)
             .padding(.horizontal, 4)
             .padding(.vertical, 1)
     }
 
-    private var iconStyle: HierarchicalShapeStyle {
+    private var iconColor: Color {
         if isSelected {
-            return .primary
+            return Color(nsColor: model.theme.colors.foreground.nsColor)
         }
-        return node.isViewable || node.isDirectory ? .primary : .secondary
+        return Color(nsColor: (node.isViewable || node.isDirectory ? model.theme.colors.foreground : model.theme.colors.mutedForeground).nsColor)
     }
 
-    private var textStyle: HierarchicalShapeStyle {
+    private var textColor: Color {
         if isSelected {
-            return .primary
+            return Color(nsColor: model.theme.colors.foreground.nsColor)
         }
-        return node.isViewable || node.isDirectory ? .primary : .secondary
+        return Color(nsColor: (node.isViewable || node.isDirectory ? model.theme.colors.foreground : model.theme.colors.mutedForeground).nsColor)
     }
 }

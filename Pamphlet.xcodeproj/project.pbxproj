@@ -11,6 +11,7 @@
 		A00000000000000000000014 /* PamphletMain.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000115 /* PamphletMain.swift */; };
 		A00000000000000000000002 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000102 /* AppCoordinator.swift */; };
 		A00000000000000000000003 /* WorkspaceWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000103 /* WorkspaceWindowController.swift */; };
+		A0000000000000000000001A /* PreferencesWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0000000000000000000011B /* PreferencesWindowController.swift */; };
 		A00000000000000000000004 /* ViewMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000104 /* ViewMode.swift */; };
 		A00000000000000000000005 /* ViewTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000105 /* ViewTab.swift */; };
 		A00000000000000000000006 /* FileNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000106 /* FileNode.swift */; };
@@ -30,6 +31,8 @@
 		A00000000000000000000010 /* TabStripView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000110 /* TabStripView.swift */; };
 		A00000000000000000000011 /* ViewPane.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000111 /* ViewPane.swift */; };
 		A00000000000000000000012 /* WebRendererView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000112 /* WebRendererView.swift */; };
+		A0000000000000000000001B /* PreferencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0000000000000000000011C /* PreferencesView.swift */; };
+		A0000000000000000000001C /* ThemeBadgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0000000000000000000011D /* ThemeBadgeView.swift */; };
 		A00000000000000000000013 /* WorkspaceModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000113 /* WorkspaceModelTests.swift */; };
 		A00000000000000000000019 /* ThemeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0000000000000000000011A /* ThemeTests.swift */; };
 /* End PBXBuildFile section */
@@ -39,6 +42,7 @@
 		A00000000000000000000115 /* PamphletMain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PamphletMain.swift; sourceTree = "<group>"; };
 		A00000000000000000000102 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
 		A00000000000000000000103 /* WorkspaceWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceWindowController.swift; sourceTree = "<group>"; };
+		A0000000000000000000011B /* PreferencesWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesWindowController.swift; sourceTree = "<group>"; };
 		A00000000000000000000114 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A00000000000000000000104 /* ViewMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewMode.swift; sourceTree = "<group>"; };
 		A00000000000000000000105 /* ViewTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewTab.swift; sourceTree = "<group>"; };
@@ -59,6 +63,8 @@
 		A00000000000000000000110 /* TabStripView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabStripView.swift; sourceTree = "<group>"; };
 		A00000000000000000000111 /* ViewPane.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewPane.swift; sourceTree = "<group>"; };
 		A00000000000000000000112 /* WebRendererView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebRendererView.swift; sourceTree = "<group>"; };
+		A0000000000000000000011C /* PreferencesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesView.swift; sourceTree = "<group>"; };
+		A0000000000000000000011D /* ThemeBadgeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeBadgeView.swift; sourceTree = "<group>"; };
 		A00000000000000000000113 /* WorkspaceModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceModelTests.swift; sourceTree = "<group>"; };
 		A0000000000000000000011A /* ThemeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeTests.swift; sourceTree = "<group>"; };
 		A00000000000000000000201 /* Pamphlet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Pamphlet.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -93,6 +99,7 @@
 				A00000000000000000000115 /* PamphletMain.swift */,
 				A00000000000000000000102 /* AppCoordinator.swift */,
 				A00000000000000000000103 /* WorkspaceWindowController.swift */,
+				A0000000000000000000011B /* PreferencesWindowController.swift */,
 				A00000000000000000000114 /* Info.plist */,
 			);
 			path = App;
@@ -134,6 +141,8 @@
 				A00000000000000000000110 /* TabStripView.swift */,
 				A00000000000000000000111 /* ViewPane.swift */,
 				A00000000000000000000112 /* WebRendererView.swift */,
+				A0000000000000000000011C /* PreferencesView.swift */,
+				A0000000000000000000011D /* ThemeBadgeView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -284,6 +293,7 @@
 				A00000000000000000000014 /* PamphletMain.swift in Sources */,
 				A00000000000000000000002 /* AppCoordinator.swift in Sources */,
 				A00000000000000000000003 /* WorkspaceWindowController.swift in Sources */,
+				A0000000000000000000001A /* PreferencesWindowController.swift in Sources */,
 				A00000000000000000000004 /* ViewMode.swift in Sources */,
 				A00000000000000000000005 /* ViewTab.swift in Sources */,
 				A00000000000000000000006 /* FileNode.swift in Sources */,
@@ -303,6 +313,8 @@
 				A00000000000000000000010 /* TabStripView.swift in Sources */,
 				A00000000000000000000011 /* ViewPane.swift in Sources */,
 				A00000000000000000000012 /* WebRendererView.swift in Sources */,
+				A0000000000000000000001B /* PreferencesView.swift in Sources */,
+				A0000000000000000000001C /* ThemeBadgeView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

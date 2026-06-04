@@ -23,7 +23,11 @@ struct WebRendererView: NSViewRepresentable {
 
     func updateNSView(_ webView: WKWebView, context: Context) {
         webView.pageZoom = zoom
-        let key = "\(payload.filePath)|\(payload.refreshVersion)|\(payload.mode)|\(payload.content?.hashValue ?? 0)|\(payload.imageUrl ?? "")"
+        let themeKey = payload.theme.variables
+            .sorted { $0.key < $1.key }
+            .map { "\($0.key)=\($0.value)" }
+            .joined(separator: "|")
+        let key = "\(payload.filePath)|\(payload.refreshVersion)|\(payload.mode)|\(payload.content?.hashValue ?? 0)|\(payload.imageUrl ?? "")|\(payload.theme.appCSS.hashValue)|\(payload.theme.workspaceCSS.hashValue)|\(themeKey.hashValue)"
         guard context.coordinator.lastRenderKey != key else { return }
         context.coordinator.lastRenderKey = key
         webView.loadHTMLString(makeHTML(payload: payload), baseURL: Bundle.main.resourceURL)

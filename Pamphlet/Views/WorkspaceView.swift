@@ -3,6 +3,7 @@ import SwiftUI
 
 struct WorkspaceView: View {
     @ObservedObject var model: WorkspaceViewModel
+    @Environment(\.colorScheme) private var colorScheme
 
     var body: some View {
         Group {
@@ -12,7 +13,12 @@ struct WorkspaceView: View {
                 WorkspaceContentView(model: model)
             }
         }
+        .background(Color(nsColor: model.theme.colors.background.nsColor))
+        .themeBadgeOverlay(model.theme.badge?.anchor == .window ? model.theme.badge : nil)
         .frame(minWidth: 760, minHeight: 460)
+        .onChange(of: colorScheme) { _, _ in
+            model.reloadTheme()
+        }
     }
 }
 
@@ -27,6 +33,7 @@ private struct WorkspaceContentView: View {
             }
             ViewPane(model: model)
         }
+        .background(Color(nsColor: model.theme.colors.background.nsColor))
     }
 }
 

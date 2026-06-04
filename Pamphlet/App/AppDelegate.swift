@@ -34,6 +34,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         coordinator.showOpenPanel()
     }
 
+    @objc private func showPreferences(_ sender: Any?) {
+        coordinator.showPreferences()
+    }
+
     @objc private func openRecentDocument(_ sender: NSMenuItem) {
         guard let url = sender.representedObject as? URL else { return }
         coordinator.open(url: url)
@@ -95,6 +99,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         let appMenuItem = NSMenuItem(title: "Pamphlet", action: nil, keyEquivalent: "")
         let appMenu = NSMenu()
         appMenu.addItem(withTitle: "About Pamphlet", action: #selector(NSApplication.orderFrontStandardAboutPanel(_:)), keyEquivalent: "")
+        appMenu.addItem(withTitle: "Preferences…", action: #selector(showPreferences(_:)), keyEquivalent: ",")
         appMenu.addItem(NSMenuItem.separator())
         let servicesItem = appMenu.addItem(withTitle: "Services", action: nil, keyEquivalent: "")
         let servicesMenu = NSMenu(title: "Services")

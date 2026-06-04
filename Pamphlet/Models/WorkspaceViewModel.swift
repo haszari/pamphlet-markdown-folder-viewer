@@ -15,6 +15,7 @@ final class WorkspaceViewModel: ObservableObject {
     @Published var zoom = 1.0
     @Published var sidebarWidth = 280.0
     @Published var tableHeaderByPath: [String: Bool] = [:]
+    @Published var theme: ResolvedTheme
 
     var onWindowSubjectChanged: ((String, URL) -> Void)?
     private weak var coordinator: AppCoordinator?
@@ -24,6 +25,7 @@ final class WorkspaceViewModel: ObservableObject {
         self.workspaceToken = UUID().uuidString
         self.sidebarVisible = sidebarVisible
         self.coordinator = coordinator
+        self.theme = ThemeStore.shared.resolveTheme(workspaceURL: self.workspaceURL, useDarkAppearance: Self.usesDarkAppearance)
 
         WorkspaceRegistry.shared.register(token: workspaceToken, workspaceURL: self.workspaceURL)
         refreshTree()
@@ -162,7 +164,16 @@ final class WorkspaceViewModel: ObservableObject {
 
     func refresh() {
         refreshVersion += 1
+        reloadTheme(refreshRenderer: false)
         refreshTree()
+        updateWindowSubject()
+    }
+
+    func reloadTheme(refreshRenderer: Bool = true) {
+        theme = ThemeStore.shared.resolveTheme(workspaceURL: workspaceURL, useDarkAppearance: Self.usesDarkAppearance)
+        if refreshRenderer {
+            refreshVersion += 1
+        }
         updateWindowSubject()
     }
 
@@ -237,10 +248,11 @@ final class WorkspaceViewModel: ObservableObject {
     }
 
     func updateWindowSubject() {
+        let workspaceTitle = theme.workspaceTitle ?? workspaceURL.lastPathComponent
         if let activeTab {
-            onWindowSubjectChanged?(activeTab.title, activeTab.fileURL)
+            onWindowSubjectChanged?("\(workspaceTitle) - \(activeTab.title)", activeTab.fileURL)
         } else {
-            onWindowSubjectChanged?(workspaceURL.lastPathComponent, workspaceURL)
+            onWindowSubjectChanged?(workspaceTitle, workspaceURL)
         }
     }
 
@@ -332,7 +344,8 @@ final class WorkspaceViewModel: ObservableObject {
             filePath: tab.relativePath,
             workspaceToken: workspaceToken,
             refreshVersion: refreshVersion,
-            table: table
+            table: table,
+            theme: theme.rendererPayload
         )
     }
 
@@ -356,5 +369,9 @@ final class WorkspaceViewModel: ObservableObject {
         case .markdown, .text, .code:
             return size > 5 * 1024 * 1024
         }
+    }
+
+    private static var usesDarkAppearance: Bool {
+        NSApp.effectiveAppearance.bestMatch(from: [.darkAqua, .aqua]) == .darkAqua
     }
 }

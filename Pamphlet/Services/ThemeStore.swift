@@ -44,8 +44,20 @@ final class ThemeStore: ObservableObject {
             ?? Self.hardcodedDefaultTheme()
     }
 
+    var userThemesURL: URL? {
+        fileManager.urls(for: .applicationSupportDirectory, in: .userDomainMask)
+            .first?
+            .appendingPathComponent("Pamphlet/Themes", isDirectory: true)
+    }
+
     func reloadAppThemes() {
         appThemes = discoverBuiltInThemes() + discoverUserThemes()
+    }
+
+    func revealUserThemesFolder() {
+        guard let userThemesURL else { return }
+        try? fileManager.createDirectory(at: userThemesURL, withIntermediateDirectories: true)
+        NSWorkspace.shared.activateFileViewerSelecting([userThemesURL])
     }
 
     func resolveTheme(workspaceURL: URL, useDarkAppearance: Bool) -> ResolvedTheme {

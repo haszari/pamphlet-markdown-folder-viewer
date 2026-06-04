@@ -1,6 +1,13 @@
 import Foundation
 
 struct RendererPayload: Codable, Equatable {
+    struct ThemePayload: Codable, Equatable {
+        let variables: [String: String]
+        let appCSS: String
+        let workspaceCSS: String
+        let appearance: String
+    }
+
     struct TableOptions: Codable, Equatable {
         let delimiter: String
         let firstRowHeader: Bool
@@ -15,6 +22,7 @@ struct RendererPayload: Codable, Equatable {
     let workspaceToken: String
     let refreshVersion: Int
     let table: TableOptions?
+    let theme: ThemePayload
 }
 
 struct LinkClick: Decodable {
