@@ -1,0 +1,164 @@
+:root {
+  color-scheme: light dark;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+  font-size: 16px;
+  line-height: 1.55;
+  color: CanvasText;
+  background: Canvas;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+  background: Canvas;
+}
+
+body {
+  overflow-wrap: break-word;
+}
+
+a {
+  color: LinkText;
+}
+
+.view {
+  box-sizing: border-box;
+  max-width: 920px;
+  margin: 0 auto;
+  padding: 32px 42px 56px;
+}
+
+.view.image {
+  display: grid;
+  max-width: none;
+  min-height: 100vh;
+  place-items: center;
+  padding: 20px;
+}
+
+.view.image img {
+  max-width: 100%;
+  max-height: calc(100vh - 40px);
+  object-fit: contain;
+}
+
+.view.source,
+.view.table {
+  max-width: none;
+  padding: 0;
+}
+
+pre,
+code {
+  font-family: "SF Mono", Menlo, Consolas, monospace;
+}
+
+.source pre {
+  box-sizing: border-box;
+  min-height: 100vh;
+  margin: 0;
+  padding: 24px 28px;
+  overflow: auto;
+  white-space: pre-wrap;
+  word-break: normal;
+}
+
+.markdown h1,
+.markdown h2,
+.markdown h3 {
+  line-height: 1.2;
+  margin: 1.6em 0 0.55em;
+}
+
+.markdown h1:first-child,
+.markdown h2:first-child,
+.markdown h3:first-child {
+  margin-top: 0;
+}
+
+.markdown p,
+.markdown ul,
+.markdown ol,
+.markdown blockquote,
+.markdown table,
+.markdown pre {
+  margin: 0 0 1em;
+}
+
+.markdown blockquote {
+  border-left: 3px solid color-mix(in srgb, CanvasText 24%, transparent);
+  color: color-mix(in srgb, CanvasText 78%, Canvas);
+  padding-left: 1em;
+}
+
+.markdown img {
+  max-width: 100%;
+  height: auto;
+}
+
+.markdown pre {
+  overflow: auto;
+  padding: 14px 16px;
+  border-radius: 6px;
+  background: color-mix(in srgb, CanvasText 8%, Canvas);
+}
+
+.markdown code {
+  border-radius: 4px;
+  background: color-mix(in srgb, CanvasText 8%, Canvas);
+  padding: 0.12em 0.28em;
+}
+
+.markdown pre code {
+  background: transparent;
+  padding: 0;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.markdown table {
+  display: block;
+  overflow-x: auto;
+}
+
+th,
+td {
+  border: 1px solid color-mix(in srgb, CanvasText 18%, Canvas);
+  padding: 6px 9px;
+  text-align: left;
+  vertical-align: top;
+}
+
+th {
+  background: color-mix(in srgb, CanvasText 7%, Canvas);
+  font-weight: 600;
+}
+
+.table-scroll {
+  height: 100vh;
+  overflow: auto;
+}
+
+.table-scroll table {
+  min-width: 100%;
+}
+
+.table-scroll thead th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.task-list-item {
+  list-style-type: none;
+}
+
+.footnotes {
+  border-top: 1px solid color-mix(in srgb, CanvasText 18%, Canvas);
+  margin-top: 2em;
+  padding-top: 1em;
+}
