@@ -21,6 +21,15 @@ Here is an SVG image:
 let message = "hello"
 ```
 
+```python
+def forecast(score):
+    mood = "storm" if score < 3 else "sun"
+    for hour in range(1, 4):
+        print(f"{hour}:00 {mood}")
+
+forecast(7)
+```
+
 Footnote example.[^one]
 
 [^one]: A fixture footnote.
