@@ -1,0 +1,72 @@
+/* copy of built in Fun theme - Resources/Themes/fun/theme.css */
+:root {
+  --pamphlet-appearance: adaptive;
+  --pamphlet-background: #fff200;
+  --pamphlet-foreground: #101010;
+  --pamphlet-muted-foreground: #0057b8;
+  --pamphlet-accent: #ed008c;
+  --pamphlet-window-background: #00a651;
+  --pamphlet-selection-background: #ff00cc;
+  --pamphlet-border: #e60012;
+  --pamphlet-font-family: "Avenir Next", "Helvetica Neue", system-ui, sans-serif;
+  --pamphlet-heading-font-family: "Comic Sans MS", "Chalkboard SE", "Marker Felt", system-ui, sans-serif;
+  --pamphlet-code-background: #ffcc00;
+  --pamphlet-quote-background: #ff9adf;
+  --pamphlet-badge-emoji: "😜";
+  --pamphlet-badge-opacity: 0.7;
+  --pamphlet-badge-anchor: content;
+  --pamphlet-badge-placement: top-right;
+}
+
+.markdown h1,
+.markdown h4 {
+  color: #e60012;
+}
+
+.markdown h2,
+.markdown h5 {
+  color: #ff6b00;
+}
+
+.markdown h3,
+.markdown h6 {
+  color: #00a651;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --pamphlet-background: #0b0b0f;
+    --pamphlet-foreground: #ffdf00;
+    --pamphlet-muted-foreground: #ff8ad8;
+    --pamphlet-accent: #ff2d2d;
+    --pamphlet-window-background: #15151c;
+    --pamphlet-selection-background: #9b005f;
+    --pamphlet-border: #00d166;
+    --pamphlet-code-background: #1d1d25;
+    --pamphlet-quote-background: #251325;
+  }
+
+  .markdown h1 {
+    color: #ff2d2d;
+  }
+
+  .markdown h2 {
+    color: #ffdf00;
+  }
+
+  .markdown h3 {
+    color: #00d166;
+  }
+
+  .markdown h4 {
+    color: #ff00cc;
+  }
+
+  .markdown h5 {
+    color: #00a6ff;
+  }
+
+  .markdown h6 {
+    color: #ff8c00;
+  }
+}
