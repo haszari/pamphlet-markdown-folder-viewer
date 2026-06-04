@@ -11,6 +11,9 @@
   --pamphlet-heading-font-family: "Comic Sans MS", "Chalkboard SE", "Marker Felt", system-ui, sans-serif;
   --pamphlet-code-background: #ffcc00;
   --pamphlet-quote-background: #ff9adf;
+  --pamphlet-badge-emoji: "😜";
+  --pamphlet-badge-opacity: 0.7;
+  --pamphlet-badge-placement: top-right;
 }
 
 .markdown h1,

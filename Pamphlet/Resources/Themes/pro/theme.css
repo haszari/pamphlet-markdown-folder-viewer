@@ -11,6 +11,11 @@
   --pamphlet-heading-font-family: "Avenir Next", "Helvetica Neue", system-ui, sans-serif;
   --pamphlet-code-background: #eeeae1;
   --pamphlet-quote-background: #f2efe8;
+  --pamphlet-badge-emoji: "📠";
+  --pamphlet-badge-opacity: 0.5;
+  --pamphlet-badge-placement: bottom-left;
+  --pamphlet-badge-margin-x: 0.5rem;
+  --pamphlet-badge-margin-y: 0.5rem;
 }
 
 @media (prefers-color-scheme: dark) {
