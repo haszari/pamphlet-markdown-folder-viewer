@@ -61,7 +61,7 @@ private struct WorkspaceSplitView: NSViewRepresentable {
         context.coordinator.contentView = contentView
 
         DispatchQueue.main.async {
-            splitView.setPosition(model.sidebarWidth, ofDividerAt: 0)
+            context.coordinator.applySidebarWidthIfPossible(to: splitView)
         }
         return splitView
     }
@@ -73,7 +73,7 @@ private struct WorkspaceSplitView: NSViewRepresentable {
 
         let currentWidth = Double(splitView.arrangedSubviews.first?.frame.width ?? CGFloat(model.sidebarWidth))
         if !context.coordinator.isResizing && abs(currentWidth - model.sidebarWidth) > 0.5 {
-            splitView.setPosition(model.sidebarWidth, ofDividerAt: 0)
+            context.coordinator.applySidebarWidthIfPossible(to: splitView)
         }
     }
 
@@ -82,9 +82,24 @@ private struct WorkspaceSplitView: NSViewRepresentable {
         var sidebarView: NSHostingView<SidebarView>?
         var contentView: NSHostingView<WorkspaceContentView>?
         var isResizing = false
+        private var isApplyingSidebarWidth = false
+        private var hasAppliedInitialSidebarWidth = false
 
         init(model: WorkspaceViewModel) {
             self.model = model
+        }
+
+        @MainActor
+        @discardableResult
+        func applySidebarWidthIfPossible(to splitView: NSSplitView) -> Bool {
+            guard splitView.bounds.width > 0 else { return false }
+            isApplyingSidebarWidth = true
+            hasAppliedInitialSidebarWidth = true
+            splitView.setPosition(model.sidebarWidth, ofDividerAt: 0)
+            DispatchQueue.main.async { [weak self] in
+                self?.isApplyingSidebarWidth = false
+            }
+            return true
         }
 
         func splitView(_ splitView: NSSplitView, constrainMinCoordinate proposedMinimumPosition: CGFloat, ofSubviewAt dividerIndex: Int) -> CGFloat {
@@ -104,10 +119,18 @@ private struct WorkspaceSplitView: NSViewRepresentable {
         }
 
         func splitViewDidResizeSubviews(_ notification: Notification) {
+            guard !isApplyingSidebarWidth else {
+                isResizing = false
+                return
+            }
             guard
                 let splitView = notification.object as? NSSplitView,
                 let sidebarWidth = splitView.arrangedSubviews.first?.frame.width
             else {
+                return
+            }
+            if !hasAppliedInitialSidebarWidth {
+                applySidebarWidthIfPossible(to: splitView)
                 return
             }
 

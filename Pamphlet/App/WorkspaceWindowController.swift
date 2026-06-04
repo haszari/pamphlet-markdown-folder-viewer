@@ -30,6 +30,8 @@ final class WorkspaceWindowController: NSWindowController, NSWindowDelegate, NSW
     let model: WorkspaceViewModel
     private weak var coordinator: AppCoordinator?
     private var stateObserver: AnyCancellable?
+    private var sidebarWidthObserver: AnyCancellable?
+    private var restorableSidebarWidth: Double
 
     init(workspaceURL: URL, initialFileURL: URL?, sidebarVisible: Bool, coordinator: AppCoordinator) {
         self.coordinator = coordinator
@@ -39,6 +41,7 @@ final class WorkspaceWindowController: NSWindowController, NSWindowDelegate, NSW
             sidebarVisible: sidebarVisible,
             coordinator: coordinator
         )
+        self.restorableSidebarWidth = model.sidebarWidth
         super.init(window: Self.makeWindow(model: model))
         configureWindow()
     }
@@ -46,6 +49,7 @@ final class WorkspaceWindowController: NSWindowController, NSWindowDelegate, NSW
     init(restorationState: WorkspaceRestorationState, coordinator: AppCoordinator) {
         self.coordinator = coordinator
         self.model = WorkspaceViewModel(restorationState: restorationState, coordinator: coordinator)
+        self.restorableSidebarWidth = model.sidebarWidth
         super.init(window: Self.makeWindow(model: model))
         configureWindow()
     }
@@ -80,6 +84,10 @@ final class WorkspaceWindowController: NSWindowController, NSWindowDelegate, NSW
                 self?.window?.invalidateRestorableState()
             }
         }
+        sidebarWidthObserver = model.$sidebarWidth.sink { [weak self] width in
+            self?.restorableSidebarWidth = width
+            self?.window?.invalidateRestorableState()
+        }
         model.updateWindowSubject()
     }
 
@@ -98,7 +106,7 @@ final class WorkspaceWindowController: NSWindowController, NSWindowDelegate, NSW
             state.encode(activeRelativePath as NSString, forKey: RestorationKey.activeRelativePath)
         }
         state.encode(model.sidebarVisible, forKey: RestorationKey.sidebarVisible)
-        state.encode(model.sidebarWidth, forKey: RestorationKey.sidebarWidth)
+        state.encode(restorableSidebarWidth, forKey: RestorationKey.sidebarWidth)
         state.encode(Array(model.expandedDirectories) as NSArray, forKey: RestorationKey.expandedDirectories)
         state.encode(model.zoom, forKey: RestorationKey.zoom)
         state.encode(model.tableHeaderByPath as NSDictionary, forKey: RestorationKey.tableHeaderByPath)
