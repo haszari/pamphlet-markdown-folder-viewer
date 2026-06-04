@@ -13,6 +13,7 @@
   --pamphlet-quote-background: #ff9adf;
   --pamphlet-badge-emoji: "😜";
   --pamphlet-badge-opacity: 0.7;
+  --pamphlet-badge-anchor: content;
   --pamphlet-badge-placement: top-right;
 }
 
