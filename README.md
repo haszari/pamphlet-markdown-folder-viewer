@@ -1,6 +1,8 @@
 # Pamphlet
 
-Pamphlet is a native macOS, markdown-first folder viewer. The macOS app shell is SwiftUI/AppKit, and the read-only view surface is rendered by a separate WebKit renderer package.
+Pamphlet is a macOS native, markdown-first folder viewer. Sometimes you just need to browse and read a codebase or folder of markdown - now you have a neat little app for that.
+
+The app shell is native SwiftUI/AppKit, and the content pane is powered by a web view.
 
 ## Setup
 
@@ -38,17 +40,30 @@ Launch the app from Xcode using the `Pamphlet` scheme.
 - `File > Open…` a markdown file or folder of markdown + code.
 - Drag folders or files onto the app icon to open.
 
+## Screenshots
+
+![Pro screenshot](./screenshot-pro.png)
+
+![Fun screenshot](./screenshot-fun.png)
+
 ## Themes
+
+Pamphlet supports themes:
+
+- Set a custom theme in any workspace (e.g. brand colours for different clients/projects).
+- Choose a default theme for workspaces without a custom theme.
+- Add your own custom themes.
 
 Pamphlet themes are CSS files. App-recognised settings use flat `--pamphlet-*` variables; ordinary CSS selectors can style rendered markdown, source, table, and image views.
 
-Workspace overlays:
+Workspace themes:
 
 - Add `.pamphlet.css` at the workspace folder root.
-- Choose `File > Refresh` after editing it.
 - Set `--pamphlet-background`, `--pamphlet-foreground`, and `--pamphlet-accent` for a useful minimal theme.
 - Add `--pamphlet-workspace-title: "Banana Corp";` to customise the workspace part of the window title.
 - Add `--pamphlet-badge-emoji: "🍌";` or `--pamphlet-badge-image: url("badge.png");` for a decorative watermark.
+- See `docs/theme-reference.pamphlet.css` for all options.
+- Choose `File > Refresh` after editing it.
 
 Built-in app themes:
 
