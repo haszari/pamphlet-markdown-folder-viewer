@@ -57,8 +57,7 @@ a {
 pre,
 code {
   font-family:
-    var(--pamphlet-monospace-font-family), "SF Mono", Menlo, Consolas,
-    monospace;
+    var(--pamphlet-monospace-font-family), "SF Mono", Menlo, Consolas, monospace;
 }
 
 .source pre {
@@ -102,7 +101,8 @@ code {
 
 .markdown blockquote {
   background: var(--pamphlet-quote-background, transparent);
-  border-left: 3px solid var(--pamphlet-border, color-mix(in srgb, CanvasText 24%, transparent));
+  border-left: 3px solid
+    var(--pamphlet-border, color-mix(in srgb, CanvasText 24%, transparent));
   color: var(
     --pamphlet-muted-foreground,
     color-mix(in srgb, CanvasText 78%, Canvas)

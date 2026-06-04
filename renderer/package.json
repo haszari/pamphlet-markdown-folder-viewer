@@ -6,7 +6,8 @@
   "scripts": {
     "build": "vite build",
     "test": "vitest run",
-    "format": "prettier --write \"src/**/*.{ts,css}\" \"tests/**/*.ts\""
+    "generate:theme-reference": "node ../scripts/generate-theme-reference.mjs",
+    "format": "prettier --write \"src/**/*.{ts,css}\" \"tests/**/*.ts\" \"../scripts/**/*.{ts,mjs}\" \"../docs/theme-reference.pamphlet.css\""
   },
   "dependencies": {
     "@types/markdown-it": "^14.1.2",

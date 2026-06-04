@@ -39,8 +39,8 @@ describe("theme rendering", () => {
     render({
       ...basePayload,
       theme: {
-        rawAppCSS: ".markdown { color: #111111; }",
-        rawWorkspaceCSS: ".markdown { color: #222222; }",
+        appCSS: ".markdown { color: #111111; }",
+        workspaceCSS: ".markdown { color: #222222; }",
       },
     });
 
@@ -59,7 +59,7 @@ describe("theme rendering", () => {
     render({
       ...basePayload,
       theme: {
-        rawAppCSS:
+        appCSS:
           '@import url("https://example.com/theme.css"); .markdown { color: #111111; }',
       },
     });
@@ -76,15 +76,13 @@ describe("theme rendering", () => {
         variables: {
           "--pamphlet-background": "#101010",
         },
-        rawWorkspaceCSS: ".markdown { color: #222222; }",
+        workspaceCSS: ".markdown { color: #222222; }",
       },
     });
     render(basePayload);
 
     expect(
-      document.documentElement.style.getPropertyValue(
-        "--pamphlet-background",
-      ),
+      document.documentElement.style.getPropertyValue("--pamphlet-background"),
     ).toBe("");
     expect(
       document.getElementById("pamphlet-workspace-theme-css")?.textContent,

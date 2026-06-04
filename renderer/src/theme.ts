@@ -1,7 +1,7 @@
 export type RenderThemePayload = {
   variables?: Record<string, string>;
-  rawAppCSS?: string;
-  rawWorkspaceCSS?: string;
+  appCSS?: string;
+  workspaceCSS?: string;
 };
 
 const APP_THEME_STYLE_ID = "pamphlet-app-theme-css";
@@ -10,8 +10,8 @@ const managedVariables = new Set<string>();
 
 export function applyRenderTheme(theme: RenderThemePayload | undefined): void {
   applyVariables(theme?.variables ?? {});
-  applyThemeStyle(APP_THEME_STYLE_ID, theme?.rawAppCSS ?? "");
-  applyThemeStyle(WORKSPACE_THEME_STYLE_ID, theme?.rawWorkspaceCSS ?? "");
+  applyThemeStyle(APP_THEME_STYLE_ID, theme?.appCSS ?? "");
+  applyThemeStyle(WORKSPACE_THEME_STYLE_ID, theme?.workspaceCSS ?? "");
 }
 
 function applyVariables(variables: Record<string, string>): void {
