@@ -1,0 +1,27 @@
+:root {
+  --pamphlet-appearance: adaptive;
+  --pamphlet-background: #fff8e7;
+  --pamphlet-foreground: #2d1b2f;
+  --pamphlet-muted-foreground: #7b637c;
+  --pamphlet-accent: #e14f9a;
+  --pamphlet-window-background: #ffeec2;
+  --pamphlet-selection-background: #ffd6eb;
+  --pamphlet-border: #e9c46a;
+  --pamphlet-code-background: #fff0d1;
+  --pamphlet-quote-background: #fff2c7;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --pamphlet-background: #24162f;
+    --pamphlet-foreground: #fff4d6;
+    --pamphlet-muted-foreground: #d8b7d4;
+    --pamphlet-accent: #ff8ac7;
+    --pamphlet-window-background: #1b1024;
+    --pamphlet-selection-background: #5a264d;
+    --pamphlet-border: #7a4f23;
+    --pamphlet-code-background: #321f3d;
+    --pamphlet-quote-background: #2c1b36;
+  }
+}
+

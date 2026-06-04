@@ -16,17 +16,22 @@
 		A00000000000000000000006 /* FileNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000106 /* FileNode.swift */; };
 		A00000000000000000000007 /* RendererPayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000107 /* RendererPayload.swift */; };
 		A00000000000000000000008 /* WorkspaceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000108 /* WorkspaceViewModel.swift */; };
+		A00000000000000000000015 /* ThemeTokens.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000116 /* ThemeTokens.swift */; };
+		A00000000000000000000016 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000117 /* Theme.swift */; };
 		A00000000000000000000009 /* URL+Workspace.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000109 /* URL+Workspace.swift */; };
 		A0000000000000000000000A /* ViewableTypeDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0000000000000000000010A /* ViewableTypeDetector.swift */; };
 		A0000000000000000000000B /* WorkspaceRegistry.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0000000000000000000010B /* WorkspaceRegistry.swift */; };
 		A0000000000000000000000C /* WorkspaceURLSchemeHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0000000000000000000010C /* WorkspaceURLSchemeHandler.swift */; };
 		A0000000000000000000000D /* RendererAssets.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0000000000000000000010D /* RendererAssets.swift */; };
+		A00000000000000000000017 /* ThemeVariableParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000118 /* ThemeVariableParser.swift */; };
+		A00000000000000000000018 /* ThemeStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000119 /* ThemeStore.swift */; };
 		A0000000000000000000000E /* WorkspaceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0000000000000000000010E /* WorkspaceView.swift */; };
 		A0000000000000000000000F /* SidebarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0000000000000000000010F /* SidebarView.swift */; };
 		A00000000000000000000010 /* TabStripView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000110 /* TabStripView.swift */; };
 		A00000000000000000000011 /* ViewPane.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000111 /* ViewPane.swift */; };
 		A00000000000000000000012 /* WebRendererView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000112 /* WebRendererView.swift */; };
 		A00000000000000000000013 /* WorkspaceModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000113 /* WorkspaceModelTests.swift */; };
+		A00000000000000000000019 /* ThemeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0000000000000000000011A /* ThemeTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,17 +45,22 @@
 		A00000000000000000000106 /* FileNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileNode.swift; sourceTree = "<group>"; };
 		A00000000000000000000107 /* RendererPayload.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RendererPayload.swift; sourceTree = "<group>"; };
 		A00000000000000000000108 /* WorkspaceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceViewModel.swift; sourceTree = "<group>"; };
+		A00000000000000000000116 /* ThemeTokens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeTokens.swift; sourceTree = "<group>"; };
+		A00000000000000000000117 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		A00000000000000000000109 /* URL+Workspace.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+Workspace.swift"; sourceTree = "<group>"; };
 		A0000000000000000000010A /* ViewableTypeDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewableTypeDetector.swift; sourceTree = "<group>"; };
 		A0000000000000000000010B /* WorkspaceRegistry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceRegistry.swift; sourceTree = "<group>"; };
 		A0000000000000000000010C /* WorkspaceURLSchemeHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceURLSchemeHandler.swift; sourceTree = "<group>"; };
 		A0000000000000000000010D /* RendererAssets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RendererAssets.swift; sourceTree = "<group>"; };
+		A00000000000000000000118 /* ThemeVariableParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeVariableParser.swift; sourceTree = "<group>"; };
+		A00000000000000000000119 /* ThemeStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeStore.swift; sourceTree = "<group>"; };
 		A0000000000000000000010E /* WorkspaceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceView.swift; sourceTree = "<group>"; };
 		A0000000000000000000010F /* SidebarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarView.swift; sourceTree = "<group>"; };
 		A00000000000000000000110 /* TabStripView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabStripView.swift; sourceTree = "<group>"; };
 		A00000000000000000000111 /* ViewPane.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewPane.swift; sourceTree = "<group>"; };
 		A00000000000000000000112 /* WebRendererView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebRendererView.swift; sourceTree = "<group>"; };
 		A00000000000000000000113 /* WorkspaceModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceModelTests.swift; sourceTree = "<group>"; };
+		A0000000000000000000011A /* ThemeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeTests.swift; sourceTree = "<group>"; };
 		A00000000000000000000201 /* Pamphlet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Pamphlet.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A00000000000000000000202 /* PamphletTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PamphletTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -96,6 +106,8 @@
 				A00000000000000000000106 /* FileNode.swift */,
 				A00000000000000000000107 /* RendererPayload.swift */,
 				A00000000000000000000108 /* WorkspaceViewModel.swift */,
+				A00000000000000000000116 /* ThemeTokens.swift */,
+				A00000000000000000000117 /* Theme.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -108,6 +120,8 @@
 				A0000000000000000000010B /* WorkspaceRegistry.swift */,
 				A0000000000000000000010C /* WorkspaceURLSchemeHandler.swift */,
 				A0000000000000000000010D /* RendererAssets.swift */,
+				A00000000000000000000118 /* ThemeVariableParser.swift */,
+				A00000000000000000000119 /* ThemeStore.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -128,6 +142,7 @@
 			isa = PBXGroup;
 			children = (
 				A00000000000000000000113 /* WorkspaceModelTests.swift */,
+				A0000000000000000000011A /* ThemeTests.swift */,
 			);
 			path = PamphletTests;
 			sourceTree = "<group>";
@@ -246,15 +261,17 @@
 			inputPaths = (
 				"$(SRCROOT)/renderer/dist/renderer.js",
 				"$(SRCROOT)/renderer/dist/renderer.css",
+				"$(SRCROOT)/Pamphlet/Resources/Themes",
 			);
 			name = "Copy Renderer Assets";
 			outputPaths = (
 				"$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/Renderer/renderer.js",
 				"$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/Renderer/renderer.css",
+				"$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/Themes",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "set -euo pipefail\nSRC=\"$SRCROOT/renderer/dist\"\nDST=\"$TARGET_BUILD_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH/Renderer\"\nif [ ! -f \"$SRC/renderer.js\" ] || [ ! -f \"$SRC/renderer.css\" ]; then\n  echo \"error: Renderer assets are missing. Run: cd renderer && npm install && npm run build\"\n  exit 1\nfi\nrm -rf \"$DST\"\nmkdir -p \"$DST\"\ncp \"$SRC/renderer.js\" \"$SRC/renderer.css\" \"$DST/\"\n";
+			shellScript = "set -euo pipefail\nSRC=\"$SRCROOT/renderer/dist\"\nDST=\"$TARGET_BUILD_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH/Renderer\"\nTHEME_SRC=\"$SRCROOT/Pamphlet/Resources/Themes\"\nTHEME_DST=\"$TARGET_BUILD_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH/Themes\"\nif [ ! -f \"$SRC/renderer.js\" ] || [ ! -f \"$SRC/renderer.css\" ]; then\n  echo \"error: Renderer assets are missing. Run: cd renderer && npm install && npm run build\"\n  exit 1\nfi\nrm -rf \"$DST\" \"$THEME_DST\"\nmkdir -p \"$DST\"\ncp \"$SRC/renderer.js\" \"$SRC/renderer.css\" \"$DST/\"\nif [ -d \"$THEME_SRC\" ]; then\n  mkdir -p \"$THEME_DST\"\n  cp -R \"$THEME_SRC\"/. \"$THEME_DST\"/\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -272,11 +289,15 @@
 				A00000000000000000000006 /* FileNode.swift in Sources */,
 				A00000000000000000000007 /* RendererPayload.swift in Sources */,
 				A00000000000000000000008 /* WorkspaceViewModel.swift in Sources */,
+				A00000000000000000000015 /* ThemeTokens.swift in Sources */,
+				A00000000000000000000016 /* Theme.swift in Sources */,
 				A00000000000000000000009 /* URL+Workspace.swift in Sources */,
 				A0000000000000000000000A /* ViewableTypeDetector.swift in Sources */,
 				A0000000000000000000000B /* WorkspaceRegistry.swift in Sources */,
 				A0000000000000000000000C /* WorkspaceURLSchemeHandler.swift in Sources */,
 				A0000000000000000000000D /* RendererAssets.swift in Sources */,
+				A00000000000000000000017 /* ThemeVariableParser.swift in Sources */,
+				A00000000000000000000018 /* ThemeStore.swift in Sources */,
 				A0000000000000000000000E /* WorkspaceView.swift in Sources */,
 				A0000000000000000000000F /* SidebarView.swift in Sources */,
 				A00000000000000000000010 /* TabStripView.swift in Sources */,
@@ -290,6 +311,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A00000000000000000000013 /* WorkspaceModelTests.swift in Sources */,
+				A00000000000000000000019 /* ThemeTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

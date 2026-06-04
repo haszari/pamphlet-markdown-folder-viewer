@@ -1,0 +1,13 @@
+:root {
+  --pamphlet-appearance: light;
+  --pamphlet-background: #ffffff;
+  --pamphlet-foreground: #1f2328;
+  --pamphlet-muted-foreground: #66707a;
+  --pamphlet-accent: #0969da;
+  --pamphlet-window-background: #f6f8fa;
+  --pamphlet-selection-background: #dbeafe;
+  --pamphlet-border: #d0d7de;
+  --pamphlet-code-background: #eff2f5;
+  --pamphlet-quote-background: #f6f8fa;
+}
+
