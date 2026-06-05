@@ -1,4 +1,7 @@
+<img src="./docs/app-icon/pamphlet-fold-standing-z.svg" width="160" align="right" alt="Pamphlet icon">
+
 # Pamphlet
+
 
 Pamphlet is a macOS native, markdown-first folder viewer. Sometimes you just need to browse and read a codebase or folder of markdown - now you have a neat little app for that.
 
