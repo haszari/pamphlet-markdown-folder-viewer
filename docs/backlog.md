@@ -1,0 +1,4 @@
+- Toggle sidebar doesn't work / always disabled
+- Ensure can use one bg/fg colour for whole app, optionally override chrome
+- Simplify theme colours shortlist, e.g. background, foreground, links, selection, ?
+- Render mermaid diagrams in markdown / mermaid files

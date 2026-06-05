@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" role="img" aria-labelledby="title desc">
+  <title id="title">Standing trifold pamphlet in Z fold</title>
+  <desc id="desc">A sage green trifold pamphlet standing upright with three square-corner panels folded in a shallow Z.</desc>
+  <defs>
+    <linearGradient id="left-face" x1="212" y1="237" x2="412" y2="796" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#d9d3c4"/>
+      <stop offset="1" stop-color="#b9b09f"/>
+    </linearGradient>
+    <linearGradient id="center-face" x1="412" y1="199" x2="612" y2="837" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#e7e0d0"/>
+      <stop offset="1" stop-color="#c7beaa"/>
+    </linearGradient>
+    <linearGradient id="right-face" x1="612" y1="239" x2="812" y2="797" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#d4cdbc"/>
+      <stop offset="1" stop-color="#afa692"/>
+    </linearGradient>
+    <clipPath id="left-page-clip" clipPathUnits="userSpaceOnUse">
+      <polygon points="212,277 412,229 412,793 212,745"/>
+    </clipPath>
+    <clipPath id="center-page-clip" clipPathUnits="userSpaceOnUse">
+      <polygon points="412,229 612,277 612,745 412,793"/>
+    </clipPath>
+    <clipPath id="right-page-clip" clipPathUnits="userSpaceOnUse">
+      <polygon points="612,277 812,229 812,793 612,745"/>
+    </clipPath>
+    <clipPath id="left-picture-clip" clipPathUnits="userSpaceOnUse">
+      <polygon points="246.2,535.2 366.2,538.1 366.2,695.3 246.2,675.7"/>
+    </clipPath>
+  </defs>
+
+  <g>
+    <polygon points="212,277 412,229 412,793 212,745" fill="url(#left-face)"/>
+    <polygon points="412,229 612,277 612,745 412,793" fill="url(#center-face)"/>
+    <polygon points="612,277 812,229 812,793 612,745" fill="url(#right-face)"/>
+
+    <g clip-path="url(#left-page-clip)">
+      <g fill="none" stroke="#242624" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M246.2,355.0 L264.4,364.0 L283.4,349.3 L303.0,358.5 L323.4,343.1 L344.4,352.6 L366.2,336.5" stroke-width="14"/>
+        <path d="M269.1,426.3 L282.4,431.2 L296.0,424.1 L310.0,429.1 L324.4,421.7 L339.1,426.9" stroke-width="5"/>
+
+        <g clip-path="url(#left-picture-clip)">
+          <polygon points="246.2,535.2 366.2,538.1 366.2,601.0 246.2,591.4" fill="#b9d7df" stroke="none"/>
+          <polygon points="246.2,591.4 366.2,601.0 366.2,695.3 246.2,675.7" fill="#4f9bb0" stroke="none"/>
+          <path d="M246.2,675.7 L366.2,695.3 L366.2,651.3 C308.0,651.0 276.0,646.0 246.2,636.4 Z" fill="#d6bd7a" stroke="none"/>
+          <path d="M246.2,675.7 L246.2,591.4 C250.4,582.8 255.0,570.7 259.4,566.0 C262.0,563.2 265.2,563.6 267.8,567.0 C291.0,616.0 330.0,677.0 360.0,694.4 C318.0,686.5 282.0,679.4 246.2,675.7 Z" fill="#5f9b55" stroke="none"/>
+          <polygon points="352.0,561.8 351.5,566.0 350.1,569.6 348.0,572.4 345.3,574.2 342.3,574.7 339.3,573.8 336.7,571.8 334.6,568.8 333.2,565.1 332.8,561.0 333.2,556.9 334.6,553.3 336.7,550.5 339.3,548.7 342.3,548.1 345.3,548.9 348.0,550.9 350.1,553.9 351.5,557.7" fill="#e5b84f" stroke="none"/>
+        </g>
+        <polygon points="246.2,535.2 366.2,538.1 366.2,695.3 246.2,675.7 246.2,535.2" stroke-width="6"/>
+      </g>
+    </g>
+
+    <g clip-path="url(#center-page-clip)">
+      <g fill="none" stroke="#242624" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M437.5,363.7 L459.4,374.1 L480.6,369.2 L501.2,379.1 L521.0,374.4 L540.2,383.9 L558.6,379.2 L576.4,388.3 L593.5,383.7" stroke-width="6"/>
+        <path d="M446.6,392.2 L466.0,401.8 L484.9,396.2 L503.2,405.4 L521.0,400.0 L538.2,408.8 L554.9,403.5 L571.0,412.0 L586.6,406.8" stroke-width="5"/>
+        <path d="M460.0,420.7 L475.8,429.4 L491.2,423.2 L506.3,431.6 L521.0,425.5 L535.3,433.8 L549.2,427.8 L562.8,435.8 L576.0,430.0" stroke-width="5"/>
+
+        <path d="M473.1,505.1 L489.5,516.8 L505.5,505.3 L521.0,516.6 L536.1,505.5 L550.8,516.5 L565.1,505.6" stroke-width="9"/>
+
+        <path d="M435.2,573.5 L457.8,579.8 L479.6,571.1 L500.6,577.2 L521.0,568.8 L540.6,574.8 L559.6,566.7 L577.8,572.5 L595.2,564.8" stroke-width="6"/>
+        <path d="M444.3,600.4 L464.4,606.4 L483.8,597.3 L502.7,603.1 L521.0,594.4 L538.7,600.1 L555.8,591.7 L572.4,597.2 L588.3,589.1" stroke-width="5"/>
+        <path d="M457.8,626.5 L474.2,632.3 L490.2,623.1 L505.8,628.8 L521.0,620.0 L535.8,625.5 L550.2,617.0 L564.2,622.4 L577.8,614.2" stroke-width="5"/>
+      </g>
+    </g>
+
+    <g clip-path="url(#right-page-clip)">
+      <g fill="none" stroke="#242624" stroke-linecap="round" stroke-linejoin="round">
+        <polygon points="703.0,413.8 703.0,370.3 706.8,369.9 710.6,369.8 714.3,370.0 718.0,370.5 721.7,371.2 725.2,372.2 728.6,373.5 731.9,375.0 735.0,376.8 738.0,378.8 740.7,381.1 743.2,383.6 745.4,386.3 747.4,389.2 749.1,392.2 750.5,395.4 751.6,398.7 752.4,402.2 752.9,405.7 753.1,409.2 752.9,412.8 752.4,416.4 751.6,420.0 750.5,423.5 703.0,413.8" fill="#d8442e" stroke="none"/>
+        <polygon points="703.0,413.8 750.5,423.5 748.9,427.4 746.9,431.2 744.5,434.9 741.8,438.3 738.8,441.6 735.5,444.6 731.9,447.3 728.2,449.7 724.2,451.8 720.1,453.6 715.9,455.0 711.6,456.1 707.3,456.9 703.0,457.3 698.7,457.3 694.5,457.0 690.4,456.4 686.4,455.4 682.6,454.1 678.9,452.5 675.5,450.6 672.3,448.4 669.4,446.0 666.7,443.3 664.4,440.4 662.3,437.3 660.6,434.1 659.2,430.7 703.0,413.8" fill="#f59f22" stroke="none"/>
+        <polygon points="753.1,409.2 752.6,415.2 751.3,421.1 749.1,426.9 746.1,432.5 742.4,437.6 738.0,442.4 733.0,446.5 727.5,450.1 721.7,453.0 715.6,455.1 709.3,456.6 703.0,457.3 696.8,457.2 690.7,456.4 684.9,454.9 679.5,452.8 674.5,450.0 670.1,446.6 666.2,442.7 663.0,438.4 660.4,433.6 658.6,428.6 657.4,423.4 657.1,418.0 657.4,412.5 658.6,407.0 660.4,401.7 663.0,396.5 666.2,391.6 670.1,387.0 674.5,382.8 679.5,379.1 684.9,375.9 690.7,373.4 696.8,371.5 703.0,370.3 709.3,369.8 715.6,370.1 721.7,371.2 727.5,373.0 733.0,375.6 738.0,378.8 742.4,382.7 746.1,387.2 749.1,392.2 751.3,397.6 752.6,403.3" stroke-width="7"/>
+
+        <polygon points="649.8,579.1 761.8,586.6 761.8,683.8 649.8,666.6 649.8,579.1" stroke-width="6"/>
+        <path d="M662.6,636.5 L683.4,624.0 L703.0,638.9 L725.4,620.7 L748.7,641.7" stroke="#d8442e" stroke-width="7"/>
+      </g>
+    </g>
+
+  </g>
+</svg>
