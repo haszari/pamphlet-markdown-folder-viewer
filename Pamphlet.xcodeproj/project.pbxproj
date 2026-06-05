@@ -7,74 +7,104 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0EFD98062FD275CC00391019 /* AppIcon.icon in Resources */ = {isa = PBXBuildFile; fileRef = 0EFD98052FD275CC00391019 /* AppIcon.icon */; };
 		A00000000000000000000001 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000101 /* AppDelegate.swift */; };
-		A00000000000000000000014 /* PamphletMain.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000115 /* PamphletMain.swift */; };
 		A00000000000000000000002 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000102 /* AppCoordinator.swift */; };
 		A00000000000000000000003 /* WorkspaceWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000103 /* WorkspaceWindowController.swift */; };
-		A0000000000000000000001A /* PreferencesWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0000000000000000000011B /* PreferencesWindowController.swift */; };
 		A00000000000000000000004 /* ViewMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000104 /* ViewMode.swift */; };
 		A00000000000000000000005 /* ViewTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000105 /* ViewTab.swift */; };
 		A00000000000000000000006 /* FileNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000106 /* FileNode.swift */; };
 		A00000000000000000000007 /* RendererPayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000107 /* RendererPayload.swift */; };
 		A00000000000000000000008 /* WorkspaceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000108 /* WorkspaceViewModel.swift */; };
-		A00000000000000000000015 /* ThemeTokens.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000116 /* ThemeTokens.swift */; };
-		A00000000000000000000016 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000117 /* Theme.swift */; };
 		A00000000000000000000009 /* URL+Workspace.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000109 /* URL+Workspace.swift */; };
 		A0000000000000000000000A /* ViewableTypeDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0000000000000000000010A /* ViewableTypeDetector.swift */; };
 		A0000000000000000000000B /* WorkspaceRegistry.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0000000000000000000010B /* WorkspaceRegistry.swift */; };
 		A0000000000000000000000C /* WorkspaceURLSchemeHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0000000000000000000010C /* WorkspaceURLSchemeHandler.swift */; };
 		A0000000000000000000000D /* RendererAssets.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0000000000000000000010D /* RendererAssets.swift */; };
-		A00000000000000000000017 /* ThemeVariableParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000118 /* ThemeVariableParser.swift */; };
-		A00000000000000000000018 /* ThemeStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000119 /* ThemeStore.swift */; };
 		A0000000000000000000000E /* WorkspaceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0000000000000000000010E /* WorkspaceView.swift */; };
 		A0000000000000000000000F /* SidebarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0000000000000000000010F /* SidebarView.swift */; };
 		A00000000000000000000010 /* TabStripView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000110 /* TabStripView.swift */; };
 		A00000000000000000000011 /* ViewPane.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000111 /* ViewPane.swift */; };
 		A00000000000000000000012 /* WebRendererView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000112 /* WebRendererView.swift */; };
+		A00000000000000000000013 /* WorkspaceModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000113 /* WorkspaceModelTests.swift */; };
+		A00000000000000000000014 /* PamphletMain.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000115 /* PamphletMain.swift */; };
+		A00000000000000000000015 /* ThemeTokens.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000116 /* ThemeTokens.swift */; };
+		A00000000000000000000016 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000117 /* Theme.swift */; };
+		A00000000000000000000017 /* ThemeVariableParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000118 /* ThemeVariableParser.swift */; };
+		A00000000000000000000018 /* ThemeStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000119 /* ThemeStore.swift */; };
+		A00000000000000000000019 /* ThemeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0000000000000000000011A /* ThemeTests.swift */; };
+		A0000000000000000000001A /* PreferencesWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0000000000000000000011B /* PreferencesWindowController.swift */; };
 		A0000000000000000000001B /* PreferencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0000000000000000000011C /* PreferencesView.swift */; };
 		A0000000000000000000001C /* ThemeBadgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0000000000000000000011D /* ThemeBadgeView.swift */; };
-		A00000000000000000000013 /* WorkspaceModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000113 /* WorkspaceModelTests.swift */; };
-		A00000000000000000000019 /* ThemeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0000000000000000000011A /* ThemeTests.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		A00000000000000000000602 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A00000000000000000000400 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A00000000000000000000401;
+			remoteInfo = Pamphlet;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
+		0EFD98052FD275CC00391019 /* AppIcon.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = AppIcon.icon; sourceTree = "<group>"; };
 		A00000000000000000000101 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		A00000000000000000000115 /* PamphletMain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PamphletMain.swift; sourceTree = "<group>"; };
 		A00000000000000000000102 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
 		A00000000000000000000103 /* WorkspaceWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceWindowController.swift; sourceTree = "<group>"; };
-		A0000000000000000000011B /* PreferencesWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesWindowController.swift; sourceTree = "<group>"; };
-		A00000000000000000000114 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A00000000000000000000104 /* ViewMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewMode.swift; sourceTree = "<group>"; };
 		A00000000000000000000105 /* ViewTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewTab.swift; sourceTree = "<group>"; };
 		A00000000000000000000106 /* FileNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileNode.swift; sourceTree = "<group>"; };
 		A00000000000000000000107 /* RendererPayload.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RendererPayload.swift; sourceTree = "<group>"; };
 		A00000000000000000000108 /* WorkspaceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceViewModel.swift; sourceTree = "<group>"; };
-		A00000000000000000000116 /* ThemeTokens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeTokens.swift; sourceTree = "<group>"; };
-		A00000000000000000000117 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		A00000000000000000000109 /* URL+Workspace.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+Workspace.swift"; sourceTree = "<group>"; };
 		A0000000000000000000010A /* ViewableTypeDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewableTypeDetector.swift; sourceTree = "<group>"; };
 		A0000000000000000000010B /* WorkspaceRegistry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceRegistry.swift; sourceTree = "<group>"; };
 		A0000000000000000000010C /* WorkspaceURLSchemeHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceURLSchemeHandler.swift; sourceTree = "<group>"; };
 		A0000000000000000000010D /* RendererAssets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RendererAssets.swift; sourceTree = "<group>"; };
-		A00000000000000000000118 /* ThemeVariableParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeVariableParser.swift; sourceTree = "<group>"; };
-		A00000000000000000000119 /* ThemeStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeStore.swift; sourceTree = "<group>"; };
 		A0000000000000000000010E /* WorkspaceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceView.swift; sourceTree = "<group>"; };
 		A0000000000000000000010F /* SidebarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarView.swift; sourceTree = "<group>"; };
 		A00000000000000000000110 /* TabStripView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabStripView.swift; sourceTree = "<group>"; };
 		A00000000000000000000111 /* ViewPane.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewPane.swift; sourceTree = "<group>"; };
 		A00000000000000000000112 /* WebRendererView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebRendererView.swift; sourceTree = "<group>"; };
+		A00000000000000000000113 /* WorkspaceModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceModelTests.swift; sourceTree = "<group>"; };
+		A00000000000000000000114 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A00000000000000000000115 /* PamphletMain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PamphletMain.swift; sourceTree = "<group>"; };
+		A00000000000000000000116 /* ThemeTokens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeTokens.swift; sourceTree = "<group>"; };
+		A00000000000000000000117 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
+		A00000000000000000000118 /* ThemeVariableParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeVariableParser.swift; sourceTree = "<group>"; };
+		A00000000000000000000119 /* ThemeStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeStore.swift; sourceTree = "<group>"; };
+		A0000000000000000000011A /* ThemeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeTests.swift; sourceTree = "<group>"; };
+		A0000000000000000000011B /* PreferencesWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesWindowController.swift; sourceTree = "<group>"; };
 		A0000000000000000000011C /* PreferencesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesView.swift; sourceTree = "<group>"; };
 		A0000000000000000000011D /* ThemeBadgeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeBadgeView.swift; sourceTree = "<group>"; };
-		A00000000000000000000113 /* WorkspaceModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceModelTests.swift; sourceTree = "<group>"; };
-		A0000000000000000000011A /* ThemeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeTests.swift; sourceTree = "<group>"; };
-		A00000000000000000000201 /* Pamphlet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Pamphlet.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A00000000000000000000201 /* Pamphlet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Pamphlet.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A00000000000000000000202 /* PamphletTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PamphletTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		A00000000000000000000502 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A00000000000000000000506 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
 		A00000000000000000000301 = {
 			isa = PBXGroup;
 			children = (
+				0EFD98052FD275CC00391019 /* AppIcon.icon */,
 				A00000000000000000000302 /* Pamphlet */,
 				A00000000000000000000307 /* PamphletTests */,
 				A00000000000000000000308 /* Products */,
@@ -182,7 +212,7 @@
 			dependencies = (
 			);
 			name = Pamphlet;
-			productName = "Pamphlet";
+			productName = Pamphlet;
 			productReference = A00000000000000000000201 /* Pamphlet.app */;
 			productType = "com.apple.product-type.application";
 		};
@@ -248,6 +278,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0EFD98062FD275CC00391019 /* AppIcon.icon in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -329,23 +360,6 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
-/* Begin PBXFrameworksBuildPhase section */
-		A00000000000000000000502 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		A00000000000000000000506 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXFrameworksBuildPhase section */
-
 /* Begin PBXTargetDependency section */
 		A00000000000000000000601 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -353,16 +367,6 @@
 			targetProxy = A00000000000000000000602 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
-
-/* Begin PBXContainerItemProxy section */
-		A00000000000000000000602 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = A00000000000000000000400 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = A00000000000000000000401;
-			remoteInfo = Pamphlet;
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin XCBuildConfiguration section */
 		A00000000000000000000801 /* Debug */ = {
@@ -490,9 +494,9 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.ruahaszard.Pamphlet";
+				PRODUCT_BUNDLE_IDENTIFIER = com.ruahaszard.Pamphlet;
 				PRODUCT_MODULE_NAME = Pamphlet;
-				PRODUCT_NAME = "Pamphlet";
+				PRODUCT_NAME = Pamphlet;
 				SWIFT_VERSION = 6.0;
 			};
 			name = Debug;
@@ -510,9 +514,9 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.ruahaszard.Pamphlet";
+				PRODUCT_BUNDLE_IDENTIFIER = com.ruahaszard.Pamphlet;
 				PRODUCT_MODULE_NAME = Pamphlet;
-				PRODUCT_NAME = "Pamphlet";
+				PRODUCT_NAME = Pamphlet;
 				SWIFT_VERSION = 6.0;
 			};
 			name = Release;
@@ -524,7 +528,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				GENERATE_INFOPLIST_FILE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.ruahaszard.PamphletTests";
+				PRODUCT_BUNDLE_IDENTIFIER = com.ruahaszard.PamphletTests;
 				PRODUCT_MODULE_NAME = PamphletTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 6.0;
@@ -539,7 +543,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				GENERATE_INFOPLIST_FILE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.ruahaszard.PamphletTests";
+				PRODUCT_BUNDLE_IDENTIFIER = com.ruahaszard.PamphletTests;
 				PRODUCT_MODULE_NAME = PamphletTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 6.0;

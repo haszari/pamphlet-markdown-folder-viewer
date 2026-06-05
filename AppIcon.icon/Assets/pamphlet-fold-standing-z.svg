@@ -28,7 +28,7 @@
     </clipPath>
   </defs>
 
-  <g>
+  <g transform="translate(512 512) scale(1.18) translate(-512 -512)">
     <polygon points="212,277 412,229 412,793 212,745" fill="url(#left-face)"/>
     <polygon points="412,229 612,277 612,745 412,793" fill="url(#center-face)"/>
     <polygon points="612,277 812,229 812,793 612,745" fill="url(#right-face)"/>
