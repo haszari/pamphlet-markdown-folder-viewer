@@ -146,7 +146,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
         let viewMenuItem = NSMenuItem(title: "View", action: nil, keyEquivalent: "")
         let viewMenu = NSMenu(title: "View")
-        viewMenu.addItem(withTitle: "Toggle Sidebar", action: #selector(toggleSidebar(_:)), keyEquivalent: "s").keyEquivalentModifierMask = [.command, .control]
+        let toggleSidebarItem = viewMenu.addItem(withTitle: "Toggle Tree", action: #selector(toggleSidebar(_:)), keyEquivalent: "t")
+        toggleSidebarItem.keyEquivalentModifierMask = [.command]
+        toggleSidebarItem.target = self
         let csvHeaderRowItem = viewMenu.addItem(withTitle: "CSV header row", action: #selector(toggleCSVHeaderRow(_:)), keyEquivalent: "")
         csvHeaderRowItem.target = self
         viewMenu.addItem(NSMenuItem.separator())
