@@ -1,4 +1,6 @@
 - Toggle sidebar doesn't work / always disabled
+- Performance / progress when opening large folder (hangs but succeeds)
 - Ensure can use one bg/fg colour for whole app, optionally override chrome
 - Simplify theme colours shortlist, e.g. background, foreground, links, selection, ?
 - Render mermaid diagrams in markdown / mermaid files
+- Collapse/expand headings
