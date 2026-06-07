@@ -1,5 +1,8 @@
-- Performance / progress when opening large folder (hangs but succeeds)
-- Ensure can use one bg/fg colour for whole app, optionally override chrome
-- Simplify theme colours shortlist, e.g. background, foreground, links, selection, ?
-- Render mermaid diagrams in markdown / mermaid files
-- Collapse/expand headings
+- bug: character encoding, not rendering long dashes correctly
+- bug: Performance / progress when opening large folder (hangs but succeeds)
+- bug: default theme overlays
+- feature: Ensure can use one bg/fg colour for whole app, optionally override chrome
+- feature: Simplify theme colours shortlist, e.g. background, foreground, links, selection, ?
+- feature: Render mermaid diagrams in markdown / mermaid files
+- feature: Collapse/expand headings
+- feature: reorder tabs, tab management
