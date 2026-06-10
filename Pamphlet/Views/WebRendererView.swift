@@ -36,8 +36,7 @@ struct WebRendererView: NSViewRepresentable {
     private func makeHTML(payload: RendererPayload) -> String {
         do {
             let assets = try RendererAssets.load()
-            let data = try JSONEncoder().encode(payload)
-            let encoded = data.base64EncodedString()
+            let renderScript = try RendererBootstrap.renderScript(for: payload)
             return """
             <!doctype html>
             <html>
@@ -50,7 +49,7 @@ struct WebRendererView: NSViewRepresentable {
               <div id="root"></div>
               <script>\(assets.script)</script>
               <script>
-                window.Pamphlet.render(JSON.parse(atob("\(encoded)")));
+                \(renderScript)
               </script>
             </body>
             </html>

@@ -32,3 +32,18 @@ struct LinkClick: Decodable {
     let resolvedPath: String?
     let metaKey: Bool
 }
+
+enum RendererBootstrap {
+    static func renderScript(for payload: RendererPayload) throws -> String {
+        let data = try JSONEncoder().encode(payload)
+        return renderScript(encodedPayload: data.base64EncodedString())
+    }
+
+    static func renderScript(encodedPayload: String) -> String {
+        """
+        const payloadBytes = Uint8Array.from(atob("\(encodedPayload)"), character => character.charCodeAt(0));
+        const payloadJSON = new TextDecoder("utf-8").decode(payloadBytes);
+        window.Pamphlet.render(JSON.parse(payloadJSON));
+        """
+    }
+}
