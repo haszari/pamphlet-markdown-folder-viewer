@@ -1,6 +1,6 @@
-- bug: character encoding, not rendering long dashes correctly
-- bug: Performance / progress when opening large folder (hangs but succeeds)
-- bug: default theme overlays
+- bug: UTF-8 payload decode corrupts non-ASCII characters in renderer
+- bug: opening large workspaces blocks on recursive main-thread tree scan ([plan](plans/20260603-large-folder-guardrails.md))
+- bug: minimal workspace themes inherit app-theme detail tokens and CSS selectors; project theme should be independent from app theme, no inherit
 - feature: Ensure can use one bg/fg colour for whole app, optionally override chrome
 - feature: Simplify theme colours shortlist, e.g. background, foreground, links, selection, ?
 - feature: Render mermaid diagrams in markdown / mermaid files
