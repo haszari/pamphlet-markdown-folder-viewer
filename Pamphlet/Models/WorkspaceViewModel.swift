@@ -16,9 +16,15 @@ final class WorkspaceViewModel: ObservableObject {
     @Published var sidebarWidth = 280.0
     @Published var tableHeaderByPath: [String: Bool] = [:]
     @Published var theme: ResolvedTheme
+    @Published var isTreeRootLoading = false
+    @Published var isTreePreloading = false
+    @Published var isTreeRefreshing = false
 
     var onWindowSubjectChanged: ((String, URL) -> Void)?
     private weak var coordinator: AppCoordinator?
+    private let treeLoader: WorkspaceTreeLoader
+    private var treeEventTask: Task<Void, Never>?
+    private var treeGeneration: UUID?
 
     init(workspaceURL: URL, initialFileURL: URL?, sidebarVisible: Bool, coordinator: AppCoordinator) {
         self.workspaceURL = workspaceURL.standardizedFileURL
@@ -26,9 +32,11 @@ final class WorkspaceViewModel: ObservableObject {
         self.sidebarVisible = sidebarVisible
         self.coordinator = coordinator
         self.theme = ThemeStore.shared.resolveTheme(workspaceURL: self.workspaceURL, useDarkAppearance: Self.usesDarkAppearance)
+        self.treeLoader = WorkspaceTreeLoader(workspaceURL: self.workspaceURL)
 
         WorkspaceRegistry.shared.register(token: workspaceToken, workspaceURL: self.workspaceURL)
-        refreshTree()
+        startTreeEventLoop()
+        startTreeLoad()
 
         if let initialFileURL {
             openFile(initialFileURL, openInNewTab: false)
@@ -37,6 +45,10 @@ final class WorkspaceViewModel: ObservableObject {
         }
 
         updateWindowSubject()
+    }
+
+    deinit {
+        treeEventTask?.cancel()
     }
 
     convenience init(restorationState: WorkspaceRestorationState, coordinator: AppCoordinator) {
@@ -98,11 +110,14 @@ final class WorkspaceViewModel: ObservableObject {
     }
 
     func toggleDirectory(_ node: FileNode) {
-        guard node.isDirectory else { return }
+        guard node.canExpand else { return }
         if expandedDirectories.contains(node.relativePath) {
             expandedDirectories.remove(node.relativePath)
         } else {
             expandedDirectories.insert(node.relativePath)
+            if node.loadState == .unloaded || node.loadState == .failed {
+                treeLoader.loadDirectory(node)
+            }
         }
     }
 
@@ -165,7 +180,7 @@ final class WorkspaceViewModel: ObservableObject {
     func refresh() {
         refreshVersion += 1
         reloadTheme(refreshRenderer: false)
-        refreshTree()
+        startTreeLoad()
         updateWindowSubject()
     }
 
@@ -216,6 +231,11 @@ final class WorkspaceViewModel: ObservableObject {
         NSWorkspace.shared.open(url)
     }
 
+    func cancelTreeLoading() {
+        treeEventTask?.cancel()
+        treeLoader.cancel()
+    }
+
     func handleLinkClick(_ click: LinkClick) {
         if click.isExternal, let url = URL(string: click.href) {
             NSWorkspace.shared.open(url)
@@ -253,42 +273,6 @@ final class WorkspaceViewModel: ObservableObject {
             onWindowSubjectChanged?("\(workspaceTitle) - \(activeTab.title)", activeTab.fileURL)
         } else {
             onWindowSubjectChanged?(workspaceTitle, workspaceURL)
-        }
-    }
-
-    private func refreshTree() {
-        tree = scanChildren(of: workspaceURL, relativePath: "")
-    }
-
-    private func scanChildren(of folderURL: URL, relativePath: String) -> [FileNode] {
-        let keys: Set<URLResourceKey> = [.isDirectoryKey, .isSymbolicLinkKey]
-        let urls = (try? FileManager.default.contentsOfDirectory(
-            at: folderURL,
-            includingPropertiesForKeys: Array(keys),
-            options: []
-        )) ?? []
-
-        let nodes = urls.map { url -> FileNode in
-            let values = try? url.resourceValues(forKeys: keys)
-            let isDirectory = values?.isDirectory == true
-            let isSymlink = values?.isSymbolicLink == true
-            let childRelativePath = [relativePath, url.lastPathComponent].filter { !$0.isEmpty }.joined(separator: "/")
-            return FileNode(
-                id: childRelativePath,
-                url: url,
-                relativePath: childRelativePath,
-                name: url.lastPathComponent,
-                isDirectory: isDirectory,
-                isViewable: !isDirectory && ViewableTypeDetector.isViewable(url),
-                children: isDirectory && !isSymlink ? scanChildren(of: url, relativePath: childRelativePath) : []
-            )
-        }
-
-        return nodes.sorted { lhs, rhs in
-            if lhs.isDirectory != rhs.isDirectory {
-                return lhs.isDirectory && !rhs.isDirectory
-            }
-            return lhs.name.localizedCaseInsensitiveCompare(rhs.name) == .orderedAscending
         }
     }
 
@@ -355,6 +339,86 @@ final class WorkspaceViewModel: ObservableObject {
             return String(data: Data(data.dropFirst(3)), encoding: .utf8)
         }
         return String(data: data, encoding: .utf8)
+    }
+
+    private func startTreeEventLoop() {
+        treeEventTask?.cancel()
+        treeEventTask = Task { [weak self] in
+            guard let self else { return }
+            for await event in treeLoader.events {
+                applyTreeEvent(event)
+            }
+        }
+    }
+
+    private func startTreeLoad() {
+        treeLoader.refresh()
+    }
+
+    private func applyTreeEvent(_ event: WorkspaceTreeLoadEvent) {
+        switch event {
+        case .rootLoading(let generation):
+            treeGeneration = generation
+            if tree.isEmpty {
+                isTreeRootLoading = true
+            } else {
+                isTreeRefreshing = true
+            }
+            isTreePreloading = false
+        case .rootLoaded(let generation, let children):
+            guard generation == treeGeneration else { return }
+            tree = children
+            expandedDirectories = expandedDirectories.filter { containsNode(path: $0, in: tree) }
+            isTreeRootLoading = false
+            isTreeRefreshing = false
+        case .directoryLoading(let generation, let path, let reason):
+            guard generation == treeGeneration else { return }
+            updateNode(path: path) { node in
+                node.loadState = .loading(reason)
+            }
+        case .directoryLoaded(let generation, let path, let children, _):
+            guard generation == treeGeneration else { return }
+            updateNode(path: path) { node in
+                node.children = children
+                node.loadState = .loaded
+            }
+        case .directoryFailed(let generation, let path, let reason):
+            guard generation == treeGeneration else { return }
+            if reason == .foreground {
+                updateNode(path: path) { node in
+                    node.loadState = .failed
+                }
+            }
+        case .preloadStarted(let generation):
+            guard generation == treeGeneration else { return }
+            isTreePreloading = true
+        case .preloadFinished(let generation):
+            guard generation == treeGeneration else { return }
+            isTreePreloading = false
+        }
+    }
+
+    private func updateNode(path: String, update: (inout FileNode) -> Void) {
+        updateNode(path: path, nodes: &tree, update: update)
+    }
+
+    private func updateNode(path: String, nodes: inout [FileNode], update: (inout FileNode) -> Void) {
+        for index in nodes.indices {
+            if nodes[index].relativePath == path {
+                update(&nodes[index])
+                return
+            }
+            updateNode(path: path, nodes: &nodes[index].children, update: update)
+        }
+    }
+
+    private func containsNode(path: String, in nodes: [FileNode]) -> Bool {
+        for node in nodes {
+            if node.relativePath == path || containsNode(path: path, in: node.children) {
+                return true
+            }
+        }
+        return false
     }
 
     private func isTooLargeForFirstPass(_ url: URL, mode: ViewMode) -> Bool {

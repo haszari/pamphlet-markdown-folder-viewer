@@ -7,8 +7,14 @@ struct SidebarView: View {
     var body: some View {
         ScrollView {
             LazyVStack(alignment: .leading, spacing: 0) {
+                if model.isTreeRootLoading && model.tree.isEmpty {
+                    TreeLoadingRow(title: "Loading workspace...", depth: 0)
+                }
                 ForEach(model.tree) { node in
                     FileNodeRow(model: model, node: node, depth: 0)
+                }
+                if model.isTreePreloading || model.isTreeRefreshing {
+                    TreeBackgroundLoadingRow()
                 }
             }
             .padding(.vertical, 8)
@@ -42,10 +48,17 @@ private struct FileNodeRow: View {
         model.activeTab?.relativePath == node.relativePath
     }
 
+    private var isLoading: Bool {
+        if case .loading = node.loadState {
+            return true
+        }
+        return false
+    }
+
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             HStack(spacing: 6) {
-                if node.isDirectory {
+                if node.canExpand {
                     Image(systemName: isExpanded ? "chevron.down" : "chevron.right")
                         .font(.caption)
                         .foregroundStyle(.secondary)
@@ -62,6 +75,12 @@ private struct FileNodeRow: View {
                     .lineLimit(1)
                     .truncationMode(.middle)
                     .foregroundStyle(textColor)
+
+                if isLoading {
+                    ProgressView()
+                        .controlSize(.mini)
+                        .frame(width: 14, height: 14)
+                }
 
                 Spacer(minLength: 0)
             }
@@ -94,9 +113,15 @@ private struct FileNodeRow: View {
                 }
             }
 
-            if node.isDirectory && isExpanded {
+            if node.canExpand && isExpanded {
                 ForEach(node.children) { child in
                     FileNodeRow(model: model, node: child, depth: depth + 1)
+                }
+                if case .loading(.foreground) = node.loadState {
+                    TreeLoadingRow(title: "Loading...", depth: depth + 1)
+                }
+                if node.loadState == .failed {
+                    TreeLoadingRow(title: "Could not load folder", depth: depth + 1)
                 }
             }
         }
@@ -121,5 +146,39 @@ private struct FileNodeRow: View {
             return Color(nsColor: model.theme.colors.foreground.nsColor)
         }
         return Color(nsColor: (node.isViewable || node.isDirectory ? model.theme.colors.foreground : model.theme.colors.mutedForeground).nsColor)
+    }
+}
+
+private struct TreeLoadingRow: View {
+    let title: String
+    let depth: Int
+
+    var body: some View {
+        HStack(spacing: 6) {
+            ProgressView()
+                .controlSize(.mini)
+                .frame(width: 14, height: 14)
+            Text(title)
+                .lineLimit(1)
+                .foregroundStyle(.secondary)
+            Spacer(minLength: 0)
+        }
+        .font(.system(size: 13))
+        .padding(.leading, CGFloat(depth) * 16 + 36)
+        .padding(.trailing, 8)
+        .frame(height: 24)
+    }
+}
+
+private struct TreeBackgroundLoadingRow: View {
+    var body: some View {
+        HStack {
+            Spacer()
+            ProgressView()
+                .controlSize(.mini)
+                .frame(width: 14, height: 14)
+            Spacer()
+        }
+        .frame(height: 24)
     }
 }
