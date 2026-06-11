@@ -35,11 +35,63 @@ final class WorkspaceTreeLoaderTests: XCTestCase {
             return XCTFail("Expected preload started event")
         }
 
+        let directoryLoading = await iterator.next()
+        guard case .directoryLoading(_, "docs", .background) = directoryLoading else {
+            return XCTFail("Expected background docs loading event")
+        }
+
         let directoryLoaded = await iterator.next()
         guard case .directoryLoaded(_, "docs", let docsChildren, .background) = directoryLoaded else {
             return XCTFail("Expected background docs load event")
         }
         XCTAssertEqual(docsChildren.map(\.relativePath), ["docs/guide.md"])
+    }
+
+    func testForegroundExpansionPromotesInFlightBackgroundPreload() async throws {
+        let workspaceURL = URL(fileURLWithPath: "/tmp/workspace", isDirectory: true)
+        let scanner = SuspendedDirectoryScanner(childrenByPath: [
+            "": [
+                node(workspaceURL: workspaceURL, relativePath: "docs", isDirectory: true),
+            ],
+            "docs": [
+                node(workspaceURL: workspaceURL, relativePath: "docs/guide.md", isDirectory: false),
+            ],
+        ])
+        let loader = WorkspaceTreeLoader(workspaceURL: workspaceURL, scanner: scanner, maxConcurrentScans: 1)
+        var iterator = loader.events.makeAsyncIterator()
+
+        loader.start()
+
+        _ = await iterator.next()
+        await scanner.resume(path: "")
+
+        guard case .rootLoaded(_, let rootChildren) = await iterator.next() else {
+            return XCTFail("Expected root loaded event")
+        }
+        guard let docs = rootChildren.first else {
+            return XCTFail("Expected docs node")
+        }
+
+        _ = await iterator.next()
+        guard case .directoryLoading(_, "docs", .background) = await iterator.next() else {
+            return XCTFail("Expected background docs loading event")
+        }
+
+        loader.loadDirectory(docs)
+
+        guard case .directoryLoading(_, "docs", .foreground) = await iterator.next() else {
+            return XCTFail("Expected foreground promotion event")
+        }
+
+        await scanner.resume(path: "docs")
+
+        guard case .directoryLoaded(_, "docs", let docsChildren, .foreground) = await iterator.next() else {
+            return XCTFail("Expected promoted foreground docs load event")
+        }
+        XCTAssertEqual(docsChildren.map(\.relativePath), ["docs/guide.md"])
+
+        let scanCounts = await scanner.scanCounts
+        XCTAssertEqual(scanCounts["docs"], 1)
     }
 
     func testFileManagerScannerIncludesHiddenFilesAndLeavesIgnoredFoldersUnloaded() async throws {
@@ -100,4 +152,34 @@ private func node(workspaceURL: URL, relativePath: String, isDirectory: Bool) ->
         isViewable: !isDirectory,
         children: []
     )
+}
+
+private actor SuspendedDirectoryScanner: DirectoryScanning {
+    private let childrenByPath: [String: [FileNode]]
+    private var continuations: [String: CheckedContinuation<Void, Never>] = [:]
+    private var counts: [String: Int] = [:]
+
+    init(childrenByPath: [String: [FileNode]]) {
+        self.childrenByPath = childrenByPath
+    }
+
+    var scanCounts: [String: Int] {
+        counts
+    }
+
+    func scanChildren(
+        of folderURL: URL,
+        relativePath: String,
+        ignorePolicy: WorkspaceTreeIgnorePolicy
+    ) async throws -> [FileNode] {
+        counts[relativePath, default: 0] += 1
+        await withCheckedContinuation { continuation in
+            continuations[relativePath] = continuation
+        }
+        return childrenByPath[relativePath] ?? []
+    }
+
+    func resume(path: String) {
+        continuations.removeValue(forKey: path)?.resume()
+    }
 }

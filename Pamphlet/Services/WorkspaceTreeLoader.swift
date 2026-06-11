@@ -112,6 +112,11 @@ final class WorkspaceTreeLoader {
     private var generation = UUID()
     private var tasks: [String: Task<Void, Never>] = [:]
     private var preloadTask: Task<Void, Never>?
+    private var preloadQueue: [FileNode] = []
+    private var queuedPreloadPaths: Set<String> = []
+    private var activeScans: [String: FileNodeLoadReason] = [:]
+    private var loadedPaths: Set<String> = []
+    private var foregroundPromotions: Set<String> = []
 
     let events: AsyncStream<WorkspaceTreeLoadEvent>
 
@@ -180,17 +185,35 @@ final class WorkspaceTreeLoader {
     }
 
     private func loadDirectory(url: URL, relativePath: String, generation: UUID, reason: FileNodeLoadReason) {
-        guard tasks[relativePath] == nil else { return }
+        guard !loadedPaths.contains(relativePath) else { return }
+        if activeScans[relativePath] != nil {
+            if reason == .foreground {
+                foregroundPromotions.insert(relativePath)
+                emit(.directoryLoading(generation, relativePath, .foreground))
+            }
+            return
+        }
+        startDirectoryScan(url: url, relativePath: relativePath, generation: generation, reason: reason)
+    }
+
+    private func startDirectoryScan(url: URL, relativePath: String, generation: UUID, reason: FileNodeLoadReason) {
         emit(.directoryLoading(generation, relativePath, reason))
+        activeScans[relativePath] = reason
         let task = Task { [weak self] in
             guard let self else { return }
             do {
                 let children = try await scanner.scanChildren(of: url, relativePath: relativePath, ignorePolicy: ignorePolicy)
                 guard !Task.isCancelled, self.generation == generation else { return }
-                emit(.directoryLoaded(generation, relativePath, children, reason))
+                let effectiveReason = foregroundPromotions.remove(relativePath) != nil ? .foreground : reason
+                activeScans.removeValue(forKey: relativePath)
+                loadedPaths.insert(relativePath)
+                emit(.directoryLoaded(generation, relativePath, children, effectiveReason))
+                enqueuePreload(children)
             } catch {
                 guard !Task.isCancelled, self.generation == generation else { return }
-                emit(.directoryFailed(generation, relativePath, reason))
+                let effectiveReason = foregroundPromotions.remove(relativePath) != nil ? .foreground : reason
+                activeScans.removeValue(forKey: relativePath)
+                emit(.directoryFailed(generation, relativePath, effectiveReason))
             }
             tasks.removeValue(forKey: relativePath)
         }
@@ -199,55 +222,43 @@ final class WorkspaceTreeLoader {
 
     private func startPreload(children: [FileNode], generation: UUID) {
         preloadTask?.cancel()
+        preloadQueue = []
+        queuedPreloadPaths = []
+        enqueuePreload(children)
         preloadTask = Task { [weak self] in
             guard let self else { return }
             emit(.preloadStarted(generation))
-            var queue = children.filter(\.canExpand)
-            let scanner = self.scanner
-            let ignorePolicy = self.ignorePolicy
 
-            while !queue.isEmpty {
+            while true {
                 guard !Task.isCancelled, self.generation == generation else { return }
-                let batch = Array(queue.prefix(maxConcurrentScans))
-                queue.removeFirst(min(maxConcurrentScans, queue.count))
-
-                let loaded = await withTaskGroup(of: (FileNode, Result<[FileNode], Error>).self) { group in
-                    for node in batch {
-                        group.addTask {
-                            do {
-                                let children = try await scanner.scanChildren(
-                                    of: node.url,
-                                    relativePath: node.relativePath,
-                                    ignorePolicy: ignorePolicy
-                                )
-                                return (node, .success(children))
-                            } catch {
-                                return (node, .failure(error))
-                            }
-                        }
-                    }
-
-                    var results: [(FileNode, Result<[FileNode], Error>)] = []
-                    for await result in group {
-                        results.append(result)
-                    }
-                    return results
+                startQueuedPreloadScans(generation: generation)
+                if preloadQueue.isEmpty && activeScans.isEmpty {
+                    break
                 }
-
-                for (node, result) in loaded {
-                    guard !Task.isCancelled, self.generation == generation else { return }
-                    switch result {
-                    case .success(let children):
-                        emit(.directoryLoaded(generation, node.relativePath, children, .background))
-                        queue.append(contentsOf: children.filter(\.canExpand))
-                    case .failure:
-                        emit(.directoryFailed(generation, node.relativePath, .background))
-                    }
-                }
+                try? await Task.sleep(for: .milliseconds(20))
             }
 
             guard !Task.isCancelled, self.generation == generation else { return }
             emit(.preloadFinished(generation))
+        }
+    }
+
+    private func enqueuePreload(_ nodes: [FileNode]) {
+        for node in nodes where node.canExpand && !loadedPaths.contains(node.relativePath) {
+            guard !queuedPreloadPaths.contains(node.relativePath) else { continue }
+            queuedPreloadPaths.insert(node.relativePath)
+            preloadQueue.append(node)
+        }
+    }
+
+    private func startQueuedPreloadScans(generation: UUID) {
+        while activeScans.count < maxConcurrentScans && !preloadQueue.isEmpty {
+            let node = preloadQueue.removeFirst()
+            queuedPreloadPaths.remove(node.relativePath)
+            guard !loadedPaths.contains(node.relativePath), activeScans[node.relativePath] == nil else {
+                continue
+            }
+            startDirectoryScan(url: node.url, relativePath: node.relativePath, generation: generation, reason: .background)
         }
     }
 
@@ -258,6 +269,11 @@ final class WorkspaceTreeLoader {
         tasks.removeAll()
         preloadTask?.cancel()
         preloadTask = nil
+        preloadQueue = []
+        queuedPreloadPaths = []
+        activeScans = [:]
+        loadedPaths = []
+        foregroundPromotions = []
     }
 
     private func emit(_ event: WorkspaceTreeLoadEvent) {
