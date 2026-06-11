@@ -117,7 +117,7 @@ final class WorkspaceTreeLoaderTests: XCTestCase {
 
         XCTAssertEqual(children.map(\.relativePath), [".hidden-folder", "linked-folder", "linked-target", "node_modules", ".env", "README.md"])
         XCTAssertEqual(children.first { $0.relativePath == ".hidden-folder" }?.loadState, .unloaded)
-        XCTAssertEqual(children.first { $0.relativePath == "linked-folder" }?.loadState, .loaded)
+        XCTAssertEqual(children.first { $0.relativePath == "linked-folder" }?.loadState, .nonRecursive)
         XCTAssertFalse(children.first { $0.relativePath == "linked-folder" }?.canExpand ?? true)
         XCTAssertEqual(children.first { $0.relativePath == "node_modules" }?.loadState, .ignored)
         XCTAssertEqual(children.first { $0.relativePath == ".env" }?.loadState, .file)

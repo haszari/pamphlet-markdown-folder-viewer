@@ -20,6 +20,38 @@ final class WorkspaceModelTests: XCTestCase {
         XCTAssertEqual(mode?.language, "xml")
     }
 
+    func testLoadedDirectoryRemainsExpandableEvenWhenChildrenAreNotVisibleYet() throws {
+        let root = URL(fileURLWithPath: "/tmp/workspace", isDirectory: true)
+        let folder = FileNode(
+            id: "docs",
+            url: root.appendingPathComponent("docs", isDirectory: true),
+            relativePath: "docs",
+            name: "docs",
+            isDirectory: true,
+            isViewable: false,
+            loadState: .loaded,
+            children: []
+        )
+
+        XCTAssertTrue(folder.canExpand)
+    }
+
+    func testNonRecursiveDirectoryIsNotExpandable() throws {
+        let root = URL(fileURLWithPath: "/tmp/workspace", isDirectory: true)
+        let folder = FileNode(
+            id: "linked-docs",
+            url: root.appendingPathComponent("linked-docs", isDirectory: true),
+            relativePath: "linked-docs",
+            name: "linked-docs",
+            isDirectory: true,
+            isViewable: false,
+            loadState: .nonRecursive,
+            children: []
+        )
+
+        XCTAssertFalse(folder.canExpand)
+    }
+
     func testRendererBootstrapDecodesPayloadAsUTF8() throws {
         let content = "dash \u{2014} accent cafe\u{0301} emoji \u{1F34C} cjk \u{4E2D}\u{6587}"
         let payload = RendererPayload(

@@ -126,6 +126,9 @@ final class WorkspaceViewModel: ObservableObject {
         } else {
             expandedDirectories.insert(node.relativePath)
             if node.loadState == .unloaded || node.loadState == .failed {
+                updateNode(path: node.relativePath) { node in
+                    node.loadState = .loading(.foreground)
+                }
                 treeLoader.loadDirectory(node)
             }
         }
@@ -384,6 +387,7 @@ final class WorkspaceViewModel: ObservableObject {
             }
             isTreeRootLoading = false
             isTreeRefreshing = false
+            loadRestoredExpandedDirectories(in: tree)
         case .directoryLoading(let generation, let path, let reason):
             guard generation == treeGeneration else { return }
             updateNode(path: path) { node in
@@ -395,6 +399,7 @@ final class WorkspaceViewModel: ObservableObject {
                 node.children = children
                 node.loadState = .loaded
             }
+            loadRestoredExpandedDirectories(in: children)
         case .directoryFailed(let generation, let path, let reason):
             guard generation == treeGeneration else { return }
             if reason == .foreground {
@@ -408,6 +413,16 @@ final class WorkspaceViewModel: ObservableObject {
         case .preloadFinished(let generation):
             guard generation == treeGeneration else { return }
             isTreePreloading = false
+        }
+    }
+
+    private func loadRestoredExpandedDirectories(in nodes: [FileNode]) {
+        for node in nodes where expandedDirectories.contains(node.relativePath) {
+            guard node.loadState == .unloaded || node.loadState == .failed else { continue }
+            updateNode(path: node.relativePath) { node in
+                node.loadState = .loading(.foreground)
+            }
+            treeLoader.loadDirectory(node)
         }
     }
 

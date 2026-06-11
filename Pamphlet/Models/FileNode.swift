@@ -13,6 +13,7 @@ enum FileNodeLoadState: Equatable, Sendable {
     case loading(FileNodeLoadReason)
     case loaded
     case ignored
+    case nonRecursive
     case failed
 }
 
@@ -47,11 +48,7 @@ struct FileNode: Identifiable, Equatable, Sendable {
     }
 
     var canExpand: Bool {
-        guard isDirectory, loadState != .ignored else { return false }
-        if loadState == .loaded {
-            return !children.isEmpty
-        }
-        return true
+        isDirectory && loadState != .ignored && loadState != .nonRecursive
     }
 
     var systemImageName: String {

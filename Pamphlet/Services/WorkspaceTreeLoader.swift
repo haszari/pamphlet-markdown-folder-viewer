@@ -121,7 +121,7 @@ struct FileManagerDirectoryScanner: DirectoryScanning, Sendable {
     nonisolated private static func loadState(isDirectory: Bool, isSymlink: Bool, isIgnored: Bool) -> FileNodeLoadState {
         guard isDirectory else { return .file }
         if isIgnored { return .ignored }
-        if isSymlink { return .loaded }
+        if isSymlink { return .nonRecursive }
         return .unloaded
     }
 }
