@@ -96,6 +96,7 @@ final class WorkspaceWindowController: NSWindowController, NSWindowDelegate, NSW
     }
 
     func windowWillClose(_ notification: Notification) {
+        model.cancelTreeLoading()
         coordinator?.release(self)
     }
 

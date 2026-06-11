@@ -36,6 +36,8 @@
 		A0000000000000000000001A /* PreferencesWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0000000000000000000011B /* PreferencesWindowController.swift */; };
 		A0000000000000000000001B /* PreferencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0000000000000000000011C /* PreferencesView.swift */; };
 		A0000000000000000000001C /* ThemeBadgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0000000000000000000011D /* ThemeBadgeView.swift */; };
+		A0000000000000000000001D /* WorkspaceTreeLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0000000000000000000011E /* WorkspaceTreeLoader.swift */; };
+		A0000000000000000000001E /* WorkspaceTreeLoaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0000000000000000000011F /* WorkspaceTreeLoaderTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -79,6 +81,8 @@
 		A0000000000000000000011B /* PreferencesWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesWindowController.swift; sourceTree = "<group>"; };
 		A0000000000000000000011C /* PreferencesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesView.swift; sourceTree = "<group>"; };
 		A0000000000000000000011D /* ThemeBadgeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeBadgeView.swift; sourceTree = "<group>"; };
+		A0000000000000000000011E /* WorkspaceTreeLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceTreeLoader.swift; sourceTree = "<group>"; };
+		A0000000000000000000011F /* WorkspaceTreeLoaderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceTreeLoaderTests.swift; sourceTree = "<group>"; };
 		A00000000000000000000201 /* Pamphlet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Pamphlet.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A00000000000000000000202 /* PamphletTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PamphletTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -157,6 +161,7 @@
 				A0000000000000000000010B /* WorkspaceRegistry.swift */,
 				A0000000000000000000010C /* WorkspaceURLSchemeHandler.swift */,
 				A0000000000000000000010D /* RendererAssets.swift */,
+				A0000000000000000000011E /* WorkspaceTreeLoader.swift */,
 				A00000000000000000000118 /* ThemeVariableParser.swift */,
 				A00000000000000000000119 /* ThemeStore.swift */,
 			);
@@ -182,6 +187,7 @@
 			children = (
 				A00000000000000000000113 /* WorkspaceModelTests.swift */,
 				A0000000000000000000011A /* ThemeTests.swift */,
+				A0000000000000000000011F /* WorkspaceTreeLoaderTests.swift */,
 			);
 			path = PamphletTests;
 			sourceTree = "<group>";
@@ -337,6 +343,7 @@
 				A0000000000000000000000B /* WorkspaceRegistry.swift in Sources */,
 				A0000000000000000000000C /* WorkspaceURLSchemeHandler.swift in Sources */,
 				A0000000000000000000000D /* RendererAssets.swift in Sources */,
+				A0000000000000000000001D /* WorkspaceTreeLoader.swift in Sources */,
 				A00000000000000000000017 /* ThemeVariableParser.swift in Sources */,
 				A00000000000000000000018 /* ThemeStore.swift in Sources */,
 				A0000000000000000000000E /* WorkspaceView.swift in Sources */,
@@ -355,6 +362,7 @@
 			files = (
 				A00000000000000000000013 /* WorkspaceModelTests.swift in Sources */,
 				A00000000000000000000019 /* ThemeTests.swift in Sources */,
+				A0000000000000000000001E /* WorkspaceTreeLoaderTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
