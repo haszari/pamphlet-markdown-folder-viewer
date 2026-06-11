@@ -106,7 +106,8 @@ final class WorkspaceTreeLoaderTests: XCTestCase {
         let children = try await FileManagerDirectoryScanner().scanChildren(
             of: root,
             relativePath: "",
-            ignorePolicy: .default
+            ignorePolicy: .default,
+            priority: .utility
         )
 
         XCTAssertEqual(children.map(\.relativePath), [".hidden-folder", "node_modules", ".env", "README.md"])
@@ -135,7 +136,8 @@ private final class FakeDirectoryScanner: DirectoryScanning {
     func scanChildren(
         of folderURL: URL,
         relativePath: String,
-        ignorePolicy: WorkspaceTreeIgnorePolicy
+        ignorePolicy: WorkspaceTreeIgnorePolicy,
+        priority: TaskPriority
     ) async throws -> [FileNode] {
         childrenByPath[relativePath] ?? []
     }
@@ -170,7 +172,8 @@ private actor SuspendedDirectoryScanner: DirectoryScanning {
     func scanChildren(
         of folderURL: URL,
         relativePath: String,
-        ignorePolicy: WorkspaceTreeIgnorePolicy
+        ignorePolicy: WorkspaceTreeIgnorePolicy,
+        priority: TaskPriority
     ) async throws -> [FileNode] {
         counts[relativePath, default: 0] += 1
         await withCheckedContinuation { continuation in

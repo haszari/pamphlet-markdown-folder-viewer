@@ -46,12 +46,22 @@ enum WorkspaceTreeLoadEvent: Equatable, Sendable {
 }
 
 protocol DirectoryScanning: Sendable {
-    func scanChildren(of folderURL: URL, relativePath: String, ignorePolicy: WorkspaceTreeIgnorePolicy) async throws -> [FileNode]
+    func scanChildren(
+        of folderURL: URL,
+        relativePath: String,
+        ignorePolicy: WorkspaceTreeIgnorePolicy,
+        priority: TaskPriority
+    ) async throws -> [FileNode]
 }
 
 struct FileManagerDirectoryScanner: DirectoryScanning, Sendable {
-    func scanChildren(of folderURL: URL, relativePath: String, ignorePolicy: WorkspaceTreeIgnorePolicy) async throws -> [FileNode] {
-        try await Task.detached(priority: .utility) {
+    func scanChildren(
+        of folderURL: URL,
+        relativePath: String,
+        ignorePolicy: WorkspaceTreeIgnorePolicy,
+        priority: TaskPriority
+    ) async throws -> [FileNode] {
+        try await Task.detached(priority: priority) {
             try Self.scanChildrenSync(of: folderURL, relativePath: relativePath, ignorePolicy: ignorePolicy)
         }.value
     }
@@ -145,16 +155,16 @@ final class WorkspaceTreeLoader {
         generation
     }
 
-    func start() {
+    func start(priority: TaskPriority = .userInitiated) {
         cancelTasks()
         generation = UUID()
         let activeGeneration = generation
         emit(.rootLoading(activeGeneration))
-        loadRoot(generation: activeGeneration)
+        loadRoot(generation: activeGeneration, priority: priority)
     }
 
-    func refresh() {
-        start()
+    func refresh(priority: TaskPriority = .userInitiated) {
+        start(priority: priority)
     }
 
     func loadDirectory(_ node: FileNode, reason: FileNodeLoadReason = .foreground) {
@@ -167,11 +177,16 @@ final class WorkspaceTreeLoader {
         generation = UUID()
     }
 
-    private func loadRoot(generation: UUID) {
+    private func loadRoot(generation: UUID, priority: TaskPriority) {
         let task = Task { [weak self] in
             guard let self else { return }
             do {
-                let children = try await scanner.scanChildren(of: workspaceURL, relativePath: "", ignorePolicy: ignorePolicy)
+                let children = try await scanner.scanChildren(
+                    of: workspaceURL,
+                    relativePath: "",
+                    ignorePolicy: ignorePolicy,
+                    priority: priority
+                )
                 guard !Task.isCancelled, self.generation == generation else { return }
                 emit(.rootLoaded(generation, children))
                 startPreload(children: children, generation: generation)
@@ -202,7 +217,12 @@ final class WorkspaceTreeLoader {
         let task = Task { [weak self] in
             guard let self else { return }
             do {
-                let children = try await scanner.scanChildren(of: url, relativePath: relativePath, ignorePolicy: ignorePolicy)
+                let children = try await scanner.scanChildren(
+                    of: url,
+                    relativePath: relativePath,
+                    ignorePolicy: ignorePolicy,
+                    priority: Self.scanPriority(for: reason)
+                )
                 guard !Task.isCancelled, self.generation == generation else { return }
                 let effectiveReason = foregroundPromotions.remove(relativePath) != nil ? .foreground : reason
                 activeScans.removeValue(forKey: relativePath)
@@ -260,6 +280,10 @@ final class WorkspaceTreeLoader {
             }
             startDirectoryScan(url: node.url, relativePath: node.relativePath, generation: generation, reason: .background)
         }
+    }
+
+    private static func scanPriority(for reason: FileNodeLoadReason) -> TaskPriority {
+        reason == .foreground ? .userInitiated : .utility
     }
 
     private func cancelTasks() {

@@ -36,12 +36,18 @@ final class WorkspaceViewModel: ObservableObject {
 
         WorkspaceRegistry.shared.register(token: workspaceToken, workspaceURL: self.workspaceURL)
         startTreeEventLoop()
-        startTreeLoad()
 
-        if let initialFileURL {
-            openFile(initialFileURL, openInNewTab: false)
-        } else if let startDocument = findStartDocument() {
-            openFile(startDocument, openInNewTab: false)
+        let initialContentURL = initialFileURL ?? findStartDocument()
+        if sidebarVisible {
+            startTreeLoad(priority: .userInitiated)
+            if let initialContentURL {
+                openFile(initialContentURL, openInNewTab: false)
+            }
+        } else {
+            if let initialContentURL {
+                openFile(initialContentURL, openInNewTab: false)
+            }
+            startTreeLoad(priority: .utility)
         }
 
         updateWindowSubject()
@@ -49,6 +55,10 @@ final class WorkspaceViewModel: ObservableObject {
 
     deinit {
         treeEventTask?.cancel()
+        let treeLoader = treeLoader
+        Task { @MainActor in
+            treeLoader.cancel()
+        }
     }
 
     convenience init(restorationState: WorkspaceRestorationState, coordinator: AppCoordinator) {
@@ -278,10 +288,11 @@ final class WorkspaceViewModel: ObservableObject {
 
     private func findStartDocument() -> URL? {
         let candidates = ["readme.md", "readme.markdown", "index.md", "index.markdown"]
-        let urls = (try? FileManager.default.contentsOfDirectory(at: workspaceURL, includingPropertiesForKeys: [.isDirectoryKey], options: [])) ?? []
         for candidate in candidates {
-            if let match = urls.first(where: { !$0.isDirectory && $0.lastPathComponent.lowercased() == candidate }) {
-                return match
+            let url = workspaceURL.appendingPathComponent(candidate)
+            var isDirectory: ObjCBool = false
+            if FileManager.default.fileExists(atPath: url.path, isDirectory: &isDirectory), !isDirectory.boolValue {
+                return url
             }
         }
         return nil
@@ -351,8 +362,8 @@ final class WorkspaceViewModel: ObservableObject {
         }
     }
 
-    private func startTreeLoad() {
-        treeLoader.refresh()
+    private func startTreeLoad(priority: TaskPriority = .userInitiated) {
+        treeLoader.refresh(priority: priority)
     }
 
     private func applyTreeEvent(_ event: WorkspaceTreeLoadEvent) {
