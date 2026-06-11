@@ -45,12 +45,11 @@ enum WorkspaceTreeLoadEvent: Equatable, Sendable {
     }
 }
 
-@MainActor
-protocol DirectoryScanning {
+protocol DirectoryScanning: Sendable {
     func scanChildren(of folderURL: URL, relativePath: String, ignorePolicy: WorkspaceTreeIgnorePolicy) async throws -> [FileNode]
 }
 
-struct FileManagerDirectoryScanner: DirectoryScanning {
+struct FileManagerDirectoryScanner: DirectoryScanning, Sendable {
     func scanChildren(of folderURL: URL, relativePath: String, ignorePolicy: WorkspaceTreeIgnorePolicy) async throws -> [FileNode] {
         try await Task.detached(priority: .utility) {
             try Self.scanChildrenSync(of: folderURL, relativePath: relativePath, ignorePolicy: ignorePolicy)
@@ -204,25 +203,44 @@ final class WorkspaceTreeLoader {
             guard let self else { return }
             emit(.preloadStarted(generation))
             var queue = children.filter(\.canExpand)
+            let scanner = self.scanner
+            let ignorePolicy = self.ignorePolicy
 
             while !queue.isEmpty {
                 guard !Task.isCancelled, self.generation == generation else { return }
                 let batch = Array(queue.prefix(maxConcurrentScans))
                 queue.removeFirst(min(maxConcurrentScans, queue.count))
 
-                for node in batch {
+                let loaded = await withTaskGroup(of: (FileNode, Result<[FileNode], Error>).self) { group in
+                    for node in batch {
+                        group.addTask {
+                            do {
+                                let children = try await scanner.scanChildren(
+                                    of: node.url,
+                                    relativePath: node.relativePath,
+                                    ignorePolicy: ignorePolicy
+                                )
+                                return (node, .success(children))
+                            } catch {
+                                return (node, .failure(error))
+                            }
+                        }
+                    }
+
+                    var results: [(FileNode, Result<[FileNode], Error>)] = []
+                    for await result in group {
+                        results.append(result)
+                    }
+                    return results
+                }
+
+                for (node, result) in loaded {
                     guard !Task.isCancelled, self.generation == generation else { return }
-                    do {
-                        let children = try await scanner.scanChildren(
-                            of: node.url,
-                            relativePath: node.relativePath,
-                            ignorePolicy: ignorePolicy
-                        )
-                        guard !Task.isCancelled, self.generation == generation else { return }
+                    switch result {
+                    case .success(let children):
                         emit(.directoryLoaded(generation, node.relativePath, children, .background))
                         queue.append(contentsOf: children.filter(\.canExpand))
-                    } catch {
-                        guard !Task.isCancelled, self.generation == generation else { return }
+                    case .failure:
                         emit(.directoryFailed(generation, node.relativePath, .background))
                     }
                 }
