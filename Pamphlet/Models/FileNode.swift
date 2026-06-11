@@ -47,7 +47,11 @@ struct FileNode: Identifiable, Equatable, Sendable {
     }
 
     var canExpand: Bool {
-        isDirectory && loadState != .ignored
+        guard isDirectory, loadState != .ignored else { return false }
+        if loadState == .loaded {
+            return !children.isEmpty
+        }
+        return true
     }
 
     var systemImageName: String {

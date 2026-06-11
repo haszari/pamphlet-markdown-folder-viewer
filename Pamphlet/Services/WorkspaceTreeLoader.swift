@@ -80,8 +80,8 @@ struct FileManagerDirectoryScanner: DirectoryScanning, Sendable {
 
         let nodes = urls.map { url -> FileNode in
             let values = try? url.resourceValues(forKeys: keys)
-            let isDirectory = values?.isDirectory == true
             let isSymlink = values?.isSymbolicLink == true
+            let isDirectory = values?.isDirectory == true || (isSymlink && Self.symlinkTargetsDirectory(url))
             let childRelativePath = [relativePath, url.lastPathComponent].filter { !$0.isEmpty }.joined(separator: "/")
             let isIgnored = isDirectory && ignorePolicy.ignores(url.lastPathComponent)
             return FileNode(
@@ -102,6 +102,20 @@ struct FileManagerDirectoryScanner: DirectoryScanning, Sendable {
             }
             return lhs.name.localizedCaseInsensitiveCompare(rhs.name) == .orderedAscending
         }
+    }
+
+    nonisolated private static func symlinkTargetsDirectory(_ url: URL) -> Bool {
+        guard let destination = try? FileManager.default.destinationOfSymbolicLink(atPath: url.path) else {
+            return false
+        }
+        let targetURL: URL
+        if destination.hasPrefix("/") {
+            targetURL = URL(fileURLWithPath: destination)
+        } else {
+            targetURL = url.deletingLastPathComponent().appendingPathComponent(destination)
+        }
+        var isDirectory: ObjCBool = false
+        return FileManager.default.fileExists(atPath: targetURL.path, isDirectory: &isDirectory) && isDirectory.boolValue
     }
 
     nonisolated private static func loadState(isDirectory: Bool, isSymlink: Bool, isIgnored: Bool) -> FileNodeLoadState {

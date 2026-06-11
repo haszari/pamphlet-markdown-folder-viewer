@@ -379,7 +379,9 @@ final class WorkspaceViewModel: ObservableObject {
         case .rootLoaded(let generation, let children):
             guard generation == treeGeneration else { return }
             tree = children
-            expandedDirectories = expandedDirectories.filter { containsNode(path: $0, in: tree) }
+            expandedDirectories = expandedDirectories.filter { path in
+                path.contains("/") || containsNode(path: path, in: tree)
+            }
             isTreeRootLoading = false
             isTreeRefreshing = false
         case .directoryLoading(let generation, let path, let reason):

@@ -100,6 +100,11 @@ final class WorkspaceTreeLoaderTests: XCTestCase {
 
         try FileManager.default.createDirectory(at: root.appendingPathComponent(".hidden-folder"), withIntermediateDirectories: true)
         try FileManager.default.createDirectory(at: root.appendingPathComponent("node_modules"), withIntermediateDirectories: true)
+        try FileManager.default.createDirectory(at: root.appendingPathComponent("linked-target"), withIntermediateDirectories: true)
+        try FileManager.default.createSymbolicLink(
+            at: root.appendingPathComponent("linked-folder"),
+            withDestinationURL: root.appendingPathComponent("linked-target")
+        )
         try Data().write(to: root.appendingPathComponent(".env"))
         try Data().write(to: root.appendingPathComponent("README.md"))
 
@@ -110,8 +115,10 @@ final class WorkspaceTreeLoaderTests: XCTestCase {
             priority: .utility
         )
 
-        XCTAssertEqual(children.map(\.relativePath), [".hidden-folder", "node_modules", ".env", "README.md"])
+        XCTAssertEqual(children.map(\.relativePath), [".hidden-folder", "linked-folder", "linked-target", "node_modules", ".env", "README.md"])
         XCTAssertEqual(children.first { $0.relativePath == ".hidden-folder" }?.loadState, .unloaded)
+        XCTAssertEqual(children.first { $0.relativePath == "linked-folder" }?.loadState, .loaded)
+        XCTAssertFalse(children.first { $0.relativePath == "linked-folder" }?.canExpand ?? true)
         XCTAssertEqual(children.first { $0.relativePath == "node_modules" }?.loadState, .ignored)
         XCTAssertEqual(children.first { $0.relativePath == ".env" }?.loadState, .file)
     }
