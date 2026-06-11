@@ -26,13 +26,19 @@ final class WorkspaceViewModel: ObservableObject {
     private var treeEventTask: Task<Void, Never>?
     private var treeGeneration: UUID?
 
-    init(workspaceURL: URL, initialFileURL: URL?, sidebarVisible: Bool, coordinator: AppCoordinator) {
+    init(
+        workspaceURL: URL,
+        initialFileURL: URL?,
+        sidebarVisible: Bool,
+        coordinator: AppCoordinator,
+        treeLoader: WorkspaceTreeLoader? = nil
+    ) {
         self.workspaceURL = workspaceURL.standardizedFileURL
         self.workspaceToken = UUID().uuidString
         self.sidebarVisible = sidebarVisible
         self.coordinator = coordinator
         self.theme = ThemeStore.shared.resolveTheme(workspaceURL: self.workspaceURL, useDarkAppearance: Self.usesDarkAppearance)
-        self.treeLoader = WorkspaceTreeLoader(workspaceURL: self.workspaceURL)
+        self.treeLoader = treeLoader ?? WorkspaceTreeLoader(workspaceURL: self.workspaceURL)
 
         WorkspaceRegistry.shared.register(token: workspaceToken, workspaceURL: self.workspaceURL)
         startTreeEventLoop()
@@ -400,12 +406,10 @@ final class WorkspaceViewModel: ObservableObject {
                 node.loadState = .loaded
             }
             loadRestoredExpandedDirectories(in: children)
-        case .directoryFailed(let generation, let path, let reason):
+        case .directoryFailed(let generation, let path, _):
             guard generation == treeGeneration else { return }
-            if reason == .foreground {
-                updateNode(path: path) { node in
-                    node.loadState = .failed
-                }
+            updateNode(path: path) { node in
+                node.loadState = .failed
             }
         case .preloadStarted(let generation):
             guard generation == treeGeneration else { return }

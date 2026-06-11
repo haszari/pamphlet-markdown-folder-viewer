@@ -52,6 +52,44 @@ final class WorkspaceModelTests: XCTestCase {
         XCTAssertFalse(folder.canExpand)
     }
 
+    @MainActor
+    func testBackgroundDirectoryFailureMarksNodeFailed() async throws {
+        let root = URL(fileURLWithPath: "/tmp/workspace", isDirectory: true)
+        let scanner = PathFailingDirectoryScanner(
+            childrenByPath: [
+                "": [
+                    FileNode(
+                        id: "docs",
+                        url: root.appendingPathComponent("docs", isDirectory: true),
+                        relativePath: "docs",
+                        name: "docs",
+                        isDirectory: true,
+                        isViewable: false,
+                        children: []
+                    ),
+                ],
+            ],
+            failingPaths: ["docs"]
+        )
+        let loader = WorkspaceTreeLoader(workspaceURL: root, scanner: scanner, maxConcurrentScans: 1)
+        let model = WorkspaceViewModel(
+            workspaceURL: root,
+            initialFileURL: nil,
+            sidebarVisible: true,
+            coordinator: AppCoordinator(),
+            treeLoader: loader
+        )
+        defer {
+            model.cancelTreeLoading()
+        }
+
+        let didFail = await eventually {
+            model.tree.first { $0.relativePath == "docs" }?.loadState == .failed
+        }
+
+        XCTAssertTrue(didFail)
+    }
+
     func testRendererBootstrapDecodesPayloadAsUTF8() throws {
         let content = "dash \u{2014} accent cafe\u{0301} emoji \u{1F34C} cjk \u{4E2D}\u{6587}"
         let payload = RendererPayload(
@@ -89,4 +127,37 @@ final class WorkspaceModelTests: XCTestCase {
         guard let endRange = script[valueStart...].range(of: "\"", options: []) else { return nil }
         return String(script[valueStart..<endRange.lowerBound])
     }
+}
+
+private final class PathFailingDirectoryScanner: DirectoryScanning {
+    private let childrenByPath: [String: [FileNode]]
+    private let failingPaths: Set<String>
+
+    init(childrenByPath: [String: [FileNode]], failingPaths: Set<String>) {
+        self.childrenByPath = childrenByPath
+        self.failingPaths = failingPaths
+    }
+
+    func scanChildren(
+        of folderURL: URL,
+        relativePath: String,
+        ignorePolicy: WorkspaceTreeIgnorePolicy,
+        priority: TaskPriority
+    ) async throws -> [FileNode] {
+        if failingPaths.contains(relativePath) {
+            throw CocoaError(.fileReadUnknown)
+        }
+        return childrenByPath[relativePath] ?? []
+    }
+}
+
+@MainActor
+private func eventually(_ predicate: @escaping @MainActor () -> Bool) async -> Bool {
+    for _ in 0..<100 {
+        if predicate() {
+            return true
+        }
+        try? await Task.sleep(for: .milliseconds(10))
+    }
+    return false
 }

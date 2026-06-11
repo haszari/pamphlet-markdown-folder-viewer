@@ -201,21 +201,21 @@ Manual checks:
 
 ## Completion checklist
 
-- [ ] Workspace opening no longer synchronously scans root or descendant directories.
-- [ ] Root loading is async and shows immediate visible loading state.
-- [ ] Directory expansion loads or prioritises children on demand.
-- [ ] Background preload fills reachable non-ignored directories after root entries are available.
-- [ ] Foreground expansion is not blocked behind background preload.
-- [ ] Long-running scans can be cancelled by Refresh or window close.
-- [ ] Refresh restarts async top-down loading while keeping the old tree visible until replacement root rows are available.
-- [ ] Refresh preserves expanded paths that still exist after reload.
-- [ ] Stale async results are ignored after cancellation or refresh.
-- [ ] Default global ignore list prevents known high-volume folders from being loaded.
-- [ ] Ignored directories remain visible in the sidebar.
-- [ ] Hidden dotfiles and hidden folders remain visible unless explicitly ignored.
-- [ ] Sidebar loading state covers root loading, foreground expansion, and background preload.
-- [ ] Failed foreground directory loads retry on later expansion.
-- [ ] Hidden-sidebar windows start tree loading without competing with initial file rendering.
+- [x] Workspace opening no longer synchronously scans root or descendant directories.
+- [x] Root loading is async and shows immediate visible loading state.
+- [x] Directory expansion loads or prioritises children on demand.
+- [x] Background preload fills reachable non-ignored directories after root entries are available.
+- [x] Foreground expansion is not blocked behind background preload.
+- [x] Long-running scans can be cancelled by Refresh or window close.
+- [x] Refresh restarts async top-down loading while keeping the old tree visible until replacement root rows are available.
+- [x] Refresh preserves expanded paths that still exist after reload.
+- [x] Stale async results are ignored after cancellation or refresh.
+- [x] Default global ignore list prevents known high-volume folders from being loaded.
+- [x] Ignored directories remain visible in the sidebar.
+- [x] Hidden dotfiles and hidden folders remain visible unless explicitly ignored.
+- [x] Sidebar loading state covers root loading, foreground expansion, and background preload.
+- [x] Failed foreground directory loads retry on later expansion.
+- [x] Hidden-sidebar windows start tree loading without competing with initial file rendering.
 - [ ] Loader orchestration is covered by fake scanner tests.
-- [ ] Filesystem scanning behavior is covered by real temporary directory tests.
+- [x] Filesystem scanning behavior is covered by real temporary directory tests.
 - [ ] All builds, linters, and tests pass.
