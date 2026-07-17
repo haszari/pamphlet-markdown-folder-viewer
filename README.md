@@ -3,7 +3,9 @@
 
 <img src="./docs/app-icon/pamphlet-fold-standing-z.svg" width="160" align="right" alt="Pamphlet icon">
 
-Pamphlet is a macOS native, markdown-first folder viewer. Sometimes you just need to browse and read a codebase or folder of markdown - now you have a neat little app for that.
+Pamphlet is a macOS native, markdown-first folder viewer. 
+
+Sometimes you just need to browse and read a codebase or folder of markdown - now you have a neat little app for that.
 
 The app shell is native SwiftUI/AppKit, and the content pane is powered by a web view.
 
